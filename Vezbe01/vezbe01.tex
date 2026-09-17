@@ -1,0 +1,131 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+
+\usepackage{circuitikz}
+
+\usepackage{fontspec}
+\usepackage{polyglossia}
+
+\setmainlanguage{serbian}
+\setmainfont{Times New Roman}
+
+\title{Vežbe 1 - Ponavljanje osnovih koncepata elektrotehnike i uvod u LTSpice}
+\date{}
+\author{}
+%\ctikzset{voltage/distance from node=0.25}
+\tikzset{
+    my voltage/.style={
+        circuitikz/voltage/distance from node=0.75,
+    }
+}
+
+\begin{document}
+
+\maketitle
+
+\section{Naponski razdelnik}
+
+{Omogućava izračunavanje vrednosti pada napona na komponentama koje se nalaze u istoj grani, odnosno kroz koje protiče ista struja.}
+
+\[
+\begin{circuitikz}[american]
+    \draw
+        (0,0) node[ground] {}
+        to[V, invert,l=$V_{in}$] (0,3)
+        to[R, l=$R_1$, v_>=$V_{R_1}$, my voltage] (7,3)
+        to[R, l=$R_2$, v=$V_{R_2}$, my voltage] (7,0)
+        (7,0) node[ground] {};
+
+    \draw[->, thick]
+        (3,1) arc[start angle=180,end angle=0,radius=0.5]
+        node[midway, below=0.2cm] {$K_1$};
+
+    \draw[->, thick]
+        (0,3) -- (2,3)
+        node[midway, above] {$I$};
+\end{circuitikz}
+\]
+
+{Na osnovu Omovog zakona dobijaju se izrazi}
+
+\begin{equation}
+    V_{R_1} = R_1 \cdot I
+    \quad i \quad
+    V_{R_2} = R_2 \cdot I.
+    \label{eq:ohm}
+\end{equation}
+
+{Primenom drugog Kirhofovog zakona na konturu $K_1$ dobija se izraz za napon u kolu}
+
+\begin{equation}
+    -V_{in} + V_{R_1} + V_{R_2} = 0, odnosno
+\end{equation}
+
+\begin{equation}
+    V_{in} = V_{R_1} + V_{R_2}.
+    \label{eq:cont}
+\end{equation}
+
+{Nakon uvrstanja jednačine (\ref{eq:ohm}) u (\ref{eq:cont}) dobija se}
+
+\begin{equation}
+    V_{in} = R_1 \cdot I + R_2 \cdot I,
+\end{equation}
+
+{odakle se dobija izraz za struju u kolu}
+
+\begin{equation}
+    I = \frac{V_{in}}{R_1 + R_2}.
+    \label{eq:current}
+\end{equation}
+
+{Gde se uvrštanjem jednačine (\ref{eq:current}) u izraz za napon na otpornicima (\ref{eq:ohm}) dobija}
+
+\begin{equation}
+    V_{R_1} = \frac{V_{in}}{R_1 + R_2} R_1 \quad i \quad V_{R_2} = \frac{V_{in}}{R_1 + R_2} R_2.
+\end{equation}
+
+{Naponski razdelnik deli ulazni napon na dva napona čije vrednosti zavise od otpronosti samih otpornika.}
+
+{Struja u kolu ostaje ista dok su vrednosti napona različite za svaku komponentu.}
+
+\section{Strujni razdelnik}
+
+{Omogućava izračunavanje vrednosti struje kroz komponente koje imaju jednak pad napona.}
+
+\[
+\begin{circuitikz}[american]
+    \draw
+        (0,0) node[ground] {}
+        to[I, l=$I_{S}$] (0,3)
+        -- (3.5,3)
+        to[R, l=$R_1$, v=$V_{R_1}$, my voltage] (3.5,0) node[ground] {}
+        (3.5,3) -- (7, 3) to[R, l=$R_2$, v=$V_{R_2}$, my voltage]
+        (7,0) to (7,0) node[ground] {};
+
+    \draw[->, thick]
+        (0,3) -- (2,3)
+        node[midway, above] {$I_{in}$};
+    \draw[->, thick]
+        (3.5, 3) -- (3.5, 2.5)
+        node[midway, right] {$I_1$};
+    \draw[->, thick]
+        (7,3) -- (7, 2.5)
+        node[midway, right] {$I_2$};
+    \draw
+        (3.5,3) node[circ, label=above:$A$] {};
+
+    \draw[->, thick]
+        (1,0.75) arc[start angle=180,end angle=0,radius=0.5]
+        node[midway, below=0.2cm] {$K_1$};
+
+    \draw[->, thick]
+        (5,0.75) arc[start angle=180,end angle=0,radius=0.5]
+        node[midway, below=0.2cm] {$K_2$};
+\end{circuitikz}
+\]
+
+{Treba primetiti da je pad napona na komponenatama u kolu jednak, zato što su one u paralelnoj vezi, odnosno važi da su $V_{R_1}$ i $V_{R_2}$ jednaki.}
+
+\end{document}

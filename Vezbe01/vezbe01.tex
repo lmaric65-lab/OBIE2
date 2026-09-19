@@ -3,11 +3,13 @@
 \usepackage[a4paper, margin=2.5cm]{geometry}
 
 \usepackage{circuitikz}
-
+\usepackage{graphicx}
 \usepackage{fontspec}
 \usepackage{polyglossia}
+\usepackage{hyperref}
 
 \setmainlanguage{serbian}
+\setdefaultlanguage[script=Latin]{serbian}
 \setmainfont{Times New Roman}
 
 \title{Vežbe 1 - Ponavljanje osnovih koncepata elektrotehnike i uvod u LTSpice}
@@ -24,6 +26,46 @@
 
 \maketitle
 
+\section{Biomedicinski signali}
+
+{Biomedicinski signali se definišu kao signali koji potiču iz živog sistema i nose informacije
+o stanju ili ponašanju biološkog sistema. Biomedicinski signali se mogu podeliti u dve grupe:
+jednodimenzionalni (temperatura, respiratorni signal...) i višedimenzionalni signali (slike sa 
+magnetske rezonance, kompjuterska tomografija...).}
+
+{U posebnu grupu spadaju elektrofiziološki signali koji se dobijaju merenjem električnih potencijala
+na površini tela ili unutar tela. U ovoj grupi se nalaze signali kao što su: elektrokardiogram (EKG),
+elektroencefalogram (EEG), elektromiogram (EMG) i drugi. U kliničkoj praksi mere se i mehanički signali, 
+optički signali i drugi signali, oni takođe spadaju u biomedicinske signale, doduše o njima neće biti toliko
+reči na ovom kursu. Imaju široku primenu u dijagnostici, praćenju i lečenju pacijenata.}
+
+{Kako bi se neki biomedicinski signal mogao analizirati, on najpre mora biti izmeren i snimljen pomoću
+odgovarajućeg sistema za akviziciju signala. Osnovna struktura sistema za akviziciju signala prikazana
+je na slici \ref{fig:signal_acquisition}.}
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{BlokDiagramAkvizicija.png}
+    \caption{Blok diagram sistema za akviziciju signala.}
+    \label{fig:signal_acquisition}
+\end{figure}
+
+{Kao što može na slici da se vidi, sistem za akviziciju se sastoji iz više komponenti:}
+
+\begin{enumerate}
+    \item {Pretvarač - pretvara jednu vrstu energije u drugu. Senzori pretvaraju neki oblik 
+    energije u električnu energiju, odnosno pretvaraju fiziološke signale u električne signale (npr. elektrode).}
+    \item {Pojačavač - pojačava signal na ulazu koji je u većini slučajeva veoma slab i samim tim 
+    je otežana njegova detekcija i obrada. Njihova uloga je da pojačaju amplitudu signala na ulazu
+    , kako bi proizveli što verniju reprezentaciju signala.}
+    \item {Filter - uklanja neželjene komponente signala, odnosno šum.}
+    \item {A/D konvertor - pretvara analogni signal u digitalni signal pogodan za dalju obradu na računaru.}
+    \item {Računar - vrši obradu signala i omogućava vizuelizaciju signala.}
+\end{enumerate}
+
+{Na ovom kursu akcenat će biti stavljen na pojačavače i filtere, kao ključne komponente sistema za akviziciju biomedicinskih signala.}
+
+\pagebreak
 \section{Naponski razdelnik}
 
 {Omogućava izračunavanje vrednosti pada napona na komponentama koje se nalaze u istoj grani, odnosno kroz koje protiče ista struja.}
@@ -90,6 +132,7 @@
 
 {Struja u kolu ostaje ista dok su vrednosti napona različite za svaku komponentu.}
 
+\pagebreak
 \section{Strujni razdelnik}
 
 {Omogućava izračunavanje vrednosti struje kroz komponente koje imaju jednak pad napona.}
@@ -126,6 +169,168 @@
 \end{circuitikz}
 \]
 
-{Treba primetiti da je pad napona na komponenatama u kolu jednak, zato što su one u paralelnoj vezi, odnosno važi da su $V_{R_1}$ i $V_{R_2}$ jednaki.}
+{Treba primetiti da je pad napona na komponenatama u kolu jednak, zato što su one u paralelnoj vezi,
+odnosno važi da su $V_{R_1}$ i $V_{R_2}$ jednaki. Za kolo važi da je}
+
+\begin{equation}
+    V_{in} = V_{R_1} = V_{R_2} \quad i
+\end{equation}
+
+\begin{equation}
+    V_{in} = R_1 \cdot I_1 = R_2 \cdot I_2.
+    \label{eq:ohm_parallel}
+\end{equation}
+
+{Svaki skup otpornika može se predstaviti pomoću ekvivalentnog otpornika,
+koji predstavlja kombinaciju njihovih otpornosti, čime se dobija izraz za napon u kolu}
+
+\begin{equation}
+    V_{in} = R_{eq} \cdot I_{in} = I_{in} \cdot \frac{R_1 R_2}{R_1 + R_2}.
+    \label{eq:current_parallel}
+\end{equation}
+
+{Gde se struja u kolu može odrediti ubacivanjem izraza \ref{eq:current_parallel} u izraz \ref{eq:ohm_parallel}}
+
+\begin{equation}
+    I_1 = \frac{V_{in}}{R_1} = I_{in} \cdot \frac{R_2}{R_1 + R_2} \quad i
+\end{equation}
+
+\begin{equation}
+    I_2 = \frac{V_{in}}{R_2} = I_{in} \cdot \frac{R_1}{R_1 + R_2}.
+\end{equation}
+
+\pagebreak
+\section{Tevenenova i Nortonova teorema}
+
+{Tevenenova teorema omogućava da se složeno linearno električno kolo zameni ekvivalentnim kolom koje 
+se sastoji od jednog naponskog generatora i jednog otpornika.}
+
+\begin{figure}[ht]
+    \centering
+    \begin{circuitikz}[american]
+        \draw
+            (0,0) to[V,invert, l=$V_{in}$] (0,3)
+            -- (2,3)
+            to[R, l=$R_1$] (2,0)
+            -- (0,0);
+
+        \draw
+            (2,3) -- (4,3)
+            to[R, l=$R_2$] (4,0)
+            -- (2,0);
+
+        \draw
+            (4,3) -- (6,3)
+            to[R, l=$R_i$] (6,0)
+            -- (4,0);
+
+        \draw
+            (6,3) -- (7,3) node[right]{$a$};
+        \draw
+            (6,0) -- (7,0) node[right]{$b$};
+    \end{circuitikz}
+    \label{fig:tevenen_original}
+\end{figure}
+
+{Prema Tevenenovoj teoremi, deo linearnog električnog kola koji se nalazi između priključaka $a$ i $b$
+može se zameniti ekvivalentnim kolom koje se sastoji od Tevenenovog naponskog generatora $E_{th}$ i
+Tevenenovog otpornika $R_{th}$.}
+
+\begin{figure}[ht]
+    \centering
+    \begin{circuitikz}[american]
+        \draw
+            (0,0) to[V, invert, l=$E_{th}$] (0,3)
+            -- (3,3)
+            to[R, l=$R_{th}$] (3,0)
+            -- (0,0);
+
+        \draw
+            (3,3) -- (4,3) node[right]{$a$};
+        \draw
+            (3,0) -- (4,0) node[right]{$b$};
+    \end{circuitikz}
+    \label{fig:tevenen_ekvivalentna}
+\end{figure}
+
+{Tevenenov otpornik $R_{th}$ predstavlja ekvivalentni otpornik kola posmatran između priključaka $a$ i $b$,
+pri čemu se naponski izvori zamenjuju kratkim spojem, a strujni izvori otvorenim kolom.}
+
+Nortonova teorema omogućava da se složeno linearno električno kolo, posmatrano sa dva priključka, zameni ekvivalentnim kolom koje se sastoji od jednog strujnog generatora i jednog otpornika.
+
+\begin{figure}[ht]
+    \centering
+    \begin{circuitikz}
+        \draw
+            (0,0) to[V, invert, l=$V_{in}$] (0,3)
+            -- (2,3)
+            to[R, l=$R_1$] (2,0)
+            -- (0,0);
+
+        \draw
+            (2,3) -- (4,3)
+            to[R, l=$R_2$] (4,0)
+            -- (2,0);
+
+        \draw
+            (4,3) -- (6,3)
+            to[R, l=$R_i$] (6,0)
+            -- (4,0);
+
+        \draw
+            (6,3) -- (7,3) node[right]{$a$};
+        \draw
+            (6,0) -- (7,0) node[right]{$b$};
+    \end{circuitikz}
+    \caption{Primer složenog linearnog kola sa priključcima $a$ i $b$.}
+    \label{fig:norton_original}
+\end{figure}
+
+Prema Nortonovoj teoremi, deo linearnog električnog kola koji se nalazi između priključaka $a$ i $b$ može se zameniti ekvivalentnim kolom koje se sastoji od Nortonovog strujnog generatora $I_N$ i Nortonovog otpora $R_N$.
+
+\begin{figure}[ht]
+    \centering
+    \begin{circuitikz}[american]
+        \draw
+            (0,0) -- (0,3)
+            to[I, l=$I_N$] (3,3)
+            to[R, l=$R_N$] (3,0)
+            -- (0,0);
+
+        \draw
+            (3,3) -- (4,3) node[right]{$a$};
+        \draw
+            (3,0) -- (4,0) node[right]{$b$};
+    \end{circuitikz}
+    \caption{Nortonovo ekvivalentno kolo.}
+    \label{fig:norton_equivalent}
+\end{figure}
+
+Nortonova struja $I_N$ predstavlja struju kratkog spoja između priključaka $a$ i $b$:
+
+Nortonov otpor $R_N$ predstavlja ekvivalentni otpor kola posmatran između priključaka $a$ i $b$, pri čemu se nezavisni naponski izvori zamenjuju kratkim spojem, a nezavisni strujni izvori otvorenim kolom.
+
+Nakon određivanja $I_N$ i $R_N$, originalno kolo može se zameniti Nortonovim ekvivalentom. Ukoliko se na priključke $a$ i $b$ poveže otpornik $R_L$, napon na opterećenju može se odrediti pomoću Omovog zakona:
+
+\[
+U_L = I_N \frac{R_N R_L}{R_N+R_L}
+\]
+
+\subsection{Postupak određivanja Nortonovog ekvivalenta}
+
+Za određivanje Nortonovog ekvivalentnog kola potrebno je:
+
+\begin{enumerate}
+    \item ukloniti opterećenje $R_L$ iz kola,
+    \item kratko spojiti priključke $a$ i $b$ i odrediti struju kratkog spoja, čime se dobija $I_N$,
+    \item deaktivirati nezavisne izvore u kolu,
+    \item odrediti ekvivalentni otpor između priključaka $a$ i $b$ i time dobiti $R_N$,
+    \item formirati Nortonovo ekvivalentno kolo sa strujnim generatorom $I_N$ i otpornikom $R_N$.
+\end{enumerate}
+
+\pagebreak
+\section{Uvod u LTSpice}
+
+\href{https://ltspice.analog.com/software/LTspice64.msi}{LTSpice} je softverski paket koji omogućava simulaciju električnih kola. LTSpice je besplatan i dostupan za preuzimanje sa zvaničnog sajta proizvođača. LTSpice omogućava simulaciju različitih tipova kola, uključujući linearna i nelinearna kola, kao i analizu u vremenskoj i frekvencijskoj domeni.
 
 \end{document}

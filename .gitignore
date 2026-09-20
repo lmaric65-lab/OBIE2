@@ -16,6 +16,7 @@
 *.bbl
 *.blg
 *.pdf
+*.ipynb
 
 # OS/editor files
 .DS_Store

@@ -1,0 +1,156 @@
+\section{Operacioni pojačavač u zatvorenoj sprezi}
+
+{Problem kod izvedbe operacionog pojačavača u otvorenoj sprezi je u tome što se izlazni napon $V_{out}$ veoma lako može dovesti u stanje saturacije. Zbog veoma velikog pojačanja $A_{o}$, čak i izuzetno male vrednosti diferencijalnog napona na ulazu mogu dovesti do maksimalne vrednosti izlaznog napona. Zbog toga je operacioni pojačavač u otvorenoj sprezi praktično neupotrebljiv za potrebe linearnog pojačanja signala. Na primer, ako bi diferencijalni napon na ulazu iznosio $1,\mu\mathrm{V}$, na izlazu bi se dobila vrednost od $100,\mathrm{V}$. Međutim, isti izlazni napon bi se dobio i za ulazne napone od $10,\mu\mathrm{V}$, $100,\mu\mathrm{V}$, $1,\mathrm{mV}$ itd. Na taj način praktično nije moguće razlikovati različite vrednosti ulaznog signala, jer sve one rezultuju istom vrednošću izlaznog signala, odnosno ne dobijamo linearno mapiranje ulaznog signala na izlazni signal.}
+
+{Zbog toga se operacioni pojačavači u praksi koriste u zatvorenoj sprezi, pri čemu se deo izlaznog signala vraća na ulaz operacionog pojačavača. Na taj način se postiže rad operacionog pojačavača u linearnom režimu, odnosno omogućava se da se izlazni signal $V_{out}$ menja u skladu sa ulaznim signalom $V_{in}$, pri čemu se izbegava saturacija. Ovime se dobija linearno mapiranje ulaznog signala na izlazni.}
+
+{Postoje dve izvedbe operacionog pojačavača u zatvorenoj sprezi koje se najčešće koriste, a to su: neinvertujući i invertujući operacioni pojačavač.}
+
+\subsection{Neinvertujući operacioni pojačavač}
+
+\begin{figure}[ht]
+    \centering
+    \begin{circuitikz}[american]
+        \begin{scope}
+            \ctikzset{tripoles/op amp/width=2.5,   % default 2.5
+                    tripoles/op amp/height=2}    % default 2
+            \node[op amp] (OA) at (0,0) {};
+        \end{scope}
+        \draw
+            (OA.+) -- ++(-2,0) to [V, l_=$V_{in}$] ++(0,-1) node[ground] {}
+            (OA.-) to [R, l_=$R_1$] ++(-4, 0) node[ground] {}
+            (OA.out) -- ++(1,0) node[right]{$V_{out}$};
+
+        \draw
+            (OA.up) -- ++(0,1) node[above]{$+V_{cc}$};
+
+        \draw
+            (OA.down) -- ++(0,-1) node[below]{$-V_{cc}$};
+        
+        \coordinate (topV_minus) at ($(OA.-) + (0, 2.5)$);
+        \coordinate (startarrow) at ($(OA.-) + (-1.25, 0)$);
+
+        \draw[->]
+            (startarrow) -- ++(1,0) node[midway, above] {$I_1$};
+
+        \draw[->]
+            (topV_minus) -- ++(1,0) node[midway, above] {$I_2$};
+
+        \node[circ] at (OA.-) {};
+        \node[below] at (OA.-) {$V^-$};
+        \node[circ] at (OA.+) {};
+        \node[below] at (OA.+) {$V^+$};
+        \node[circ] at (OA.out) {};
+
+        \draw
+            (OA.-) -- (topV_minus) to [R, l=$R_2$] ++(3.5,0) -- (OA.out);
+
+        
+    \end{circuitikz}
+    \caption{Neinvertujući operacioni pojačavač}
+    \label{fig:opamp_noninverting}
+\end{figure}
+
+{U konfiguraciji neinvertujećeg operacionog pojačavača ulazni signal $V_{in}$ povezan je na neinvertujući ulaz $V^+$ operacionog pojačavača, a invertujući ulaz se preko otpornika $R_1$ dovodi na masu. Pod pretpostavkom da se radi o idealnom operacionom pojačavaču važi da je}
+
+\begin{equation}
+    V^- = V^+ = V_{in}.
+\end{equation}
+
+{Budući da je ulazna impedansa idealnog operacionog pojačavača beskonačna, kroz njegove ulazne priključke ne teče struja. Zbog toga su struje kroz otpornike $R_1$ i $R_2$ jednake, pa važi}
+
+\begin{equation}
+    I_1 = \frac{V^- - 0}{R_1} \quad i \quad I_2 = \frac{V_{out} - V^-}{R_2},
+\end{equation}
+
+{odnosno}
+
+\begin{equation}
+    I = \frac{V^- - 0}{R_1} = \frac{V_{out} - V^-}{R_2}.
+    \label{eq:opamp_noninv}
+\end{equation}
+
+{Nakon izjednačavanja jednačina u izrazu \ref{eq:opamp_noninv} dobija se izraz za zavisnost izlaznog napona operacionog pojačavača od ulaznog napona}
+
+\begin{equation}
+    V_{out} = (1 + \frac{R_2}{R_1})V_{in},
+\end{equation}
+
+{gde je izraz $1 + \frac{R_2}{R_1}$ zapravo pojačanje operacionog pojačavača, odnosno}
+
+\begin{equation}
+    A_o = 1 + \frac{R_2}{R_1}.
+\end{equation}
+
+{Za razliku od otvorene sprege, gde je pojačanje određeno karakteristikama samog operacionog pojačavača, u konfiguraciji sa negativnom povratnom spregom pojačanje je određeno vrednostima otpornika $R_1$ i $R_2$.}
+
+\subsection{Invertujući operacioni pojačavač}
+
+\begin{figure}[ht]
+    \centering
+    \begin{circuitikz}[american]
+        \begin{scope}
+            \ctikzset{tripoles/op amp/width=2.5,   % default 2.5
+                    tripoles/op amp/height=2}    % default 2
+            \node[op amp] (OA) at (0,0) {};
+        \end{scope}
+        \draw
+            (OA.+) -- ++(-2,0) node[ground] {}
+            (OA.-) to [R, l_=$R_1$] ++(-4, 0) to [V, l_=$V_{in}$] ++(0,-1.4) node[ground] {}
+            (OA.out) -- ++(1,0) node[right]{$V_{out}$};
+
+        \draw
+            (OA.up) -- ++(0,1) node[above]{$+V_{cc}$};
+
+        \draw
+            (OA.down) -- ++(0,-1) node[below]{$-V_{cc}$};
+        
+        \coordinate (topV_minus) at ($(OA.-) + (0, 2.5)$);
+        \coordinate (startarrow) at ($(OA.-) + (-1.25, 0)$);
+
+        \draw[->]
+            (startarrow) -- ++(1,0) node[midway, above] {$I_1$};
+
+        \draw[->]
+            (topV_minus) -- ++(1,0) node[midway, above] {$I_2$};
+
+        \node[circ] at (OA.-) {};
+        \node[below] at (OA.-) {$V^-$};
+        \node[circ] at (OA.+) {};
+        \node[below] at (OA.+) {$V^+$};
+        \node[circ] at (OA.out) {};
+
+        \draw
+            (OA.-) -- (topV_minus) to [R, l=$R_2$] ++(3.5,0) -- (OA.out);
+
+        
+    \end{circuitikz}
+    \caption{Invertujući operacioni pojačavač}
+    \label{fig:opamp_inverting}
+\end{figure}
+
+{U ovoj konfiguraciji operacionog pojačavača se neinvertujući ulaz $V^+$ povezuje na masu, a na invertujući ulaz je povezano ulazno napajanje $V_{in}$ preko otpornika $R_1$. Pod pretpostavkom da se radi o idealnom operacionom pojačavaču može da se zaključi da su tačke $V^-$ i $V^+$ na istom potencijalu, odnosno da je $V^-$ povezan na virtuelnu masu preko $V^+$ i važi}
+
+\begin{equation}
+    V^- = V^+ = 0
+\end{equation}
+
+{Kao i kod izvedbe neinvertujućeg operacionog pojačavača i ovde je izraz za struju u kolu}
+
+\begin{equation}
+    I_1 = \frac{V_{in} - 0}{R_1} \quad i \quad I_2 = \frac{0 - V_{out}}{R_2},
+\end{equation}
+
+{odnosno}
+
+\begin{equation}
+    I = \frac{V_{in} - 0}{R_1} = \frac{0 - V_{out}}{R_2}.
+\end{equation}
+
+{I odavde može da se zaključi da je izraz koji određuje zavisnost izlaza od ulaza jednak}
+
+\begin{equation}
+    V_{out} = -\frac{R_2}{R_1} \cdot V_{in}.
+\end{equation}
+
+{Treba primetiti da se u ovoj izvedbi operacionog pojačavača ulazni signal invertuje i u zavisnosti od vrednosti otpornika $R_1$ i $R_2$, signal takođe može biti pojačan, oslabljen ili samo biti invertovan.}

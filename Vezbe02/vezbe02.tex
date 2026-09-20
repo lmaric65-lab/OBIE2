@@ -1,0 +1,59 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2.5cm]{geometry}
+
+\usepackage{amsthm}
+\usepackage{circuitikz}
+\usepackage{graphicx}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\usepackage{hyperref}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\pgfplotsset{
+  opamp plot/.style={
+    width=7cm, height=6.5cm,
+    axis lines=middle,
+    axis line style={black, thick, -{Stealth[length=2.5mm]}},
+    xmin=-1.2, xmax=1.2,
+    ymin=-13,  ymax=13,
+    xtick={-1,-0.5,0.5,1},
+    ytick={-10,-5,5,10},
+    minor tick num=0,
+    grid=major,
+    major grid style={gray!25, very thin},
+    tick style={black},
+    tick label style={font=\small},
+    xlabel={$V_{in}\,[\mathrm{V}]$},
+    ylabel={$V_{out}\,[\mathrm{V}]$},
+    xlabel style={at={(current axis.right of origin)}, anchor=west},
+    ylabel style={at={(current axis.above origin)}, anchor=south},
+    title style={font=\bfseries, yshift=1.5ex},
+    every axis plot/.append style={black, very thick, no markers},
+  }
+}
+
+
+\setmainlanguage{serbian}
+\setdefaultlanguage[script=Latin]{serbian}
+\setmainfont{Times New Roman}
+
+\title{Vežbe 2 - Operacioni pojačavač u otvorenoj i zatvorenoj sprezi}
+\date{}
+\author{}
+\tikzset{
+    my voltage/.style={
+        circuitikz/voltage/distance from node=0.75,
+    }
+}
+
+\begin{document}
+
+\maketitle
+
+\input{opamp}
+\input{opampfb}
+\input{zadaci}
+
+\end{document}

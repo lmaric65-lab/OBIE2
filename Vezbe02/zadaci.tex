@@ -1,0 +1,140 @@
+\section{Zadaci}
+
+\newtheorem{zadatak}{Zadatak}
+
+\begin{zadatak}
+    Odrediti izraz za signal na ulazu operacionog pojačavača u otvorenoj sprezi kako bi se na izlazu u potpunosti preneo ulazni signal ako je
+    $A_o = 1\,M\,\frac{V}{V}$ i $\pm V_{cc} = \pm 10\,V$.
+
+    \begin{enumerate}
+        \item[a)] Prikazati odnos ulaza i izlaza za dati operacioni pojačavač.
+        
+        \item[b)] Prikazati izlaz operacionog pojačavača za proizvoljni ulazni signal.
+    \end{enumerate}
+    Razmisliti: Šta ako se ulazni signal dovede na invertujući ulaz operacionog pojačavača, a šta ako se dovede na neinvertujući? Šta ako se dovedu 2 ulaza na invertujući i neinvertujući ulaz operacionog pojačavača?
+\end{zadatak}
+
+\begin{zadatak}
+    Odrediti signal na izlazu neinvertujućeg operacionog pojačavača i odnos ulaza i izlaza operacionog pojačavača ako su otpornosti $R_1 = 10 \,k\Omega$ i $R_2 = 50 \,k\Omega$, a napon napajanja $\pm V_{cc} = \pm 10\,V$. Na ulaz operacionog pojačavača se dovode signali:
+    \begin{enumerate}
+        \item[a)] $1V\sin{(100 \pi t)}$ i
+        
+        \item[b)] $3V\sin{(100 \pi t)}$.
+    \end{enumerate}
+    Prikazati simulaciju u trajanju od 0.01 sekunde.
+\end{zadatak}
+
+\begin{zadatak}
+    Odrediti signal na izlazu invertujućeg operacionog pojačavača i odnos ulaza i izlaza operacionog pojačavača ako su otpornosti $R_1 = 10 \,k\Omega$ i $R_2 = 50 \,k\Omega$, a napon napajanja $\pm V_{cc} = \pm 10\,V$. Na ulaz operacionog pojačavača se dovode signali:
+    \begin{enumerate}
+        \item[a)] $1V\sin{(4 \pi t)}$ i
+        
+        \item[b)] $3V\sin{(4 \pi t)}$.
+    \end{enumerate}
+    Prikazati simulaciju u trajanju od 1 sekunde.
+\end{zadatak}
+
+\pagebreak
+\section{Zadaci za vežbu}
+
+\begin{zadatak}
+    Odrediti izraz za izlaz iz operacionog pojačavača $V_{out}$ sa slike \ref{fig:opamp_zad1}.
+
+    \begin{figure}[ht]
+    \centering
+    \begin{circuitikz}[american]
+        \begin{scope}
+            \ctikzset{tripoles/op amp/width=2.5,   % default 2.5
+                    tripoles/op amp/height=2}    % default 2
+            \node[op amp] (OA) at (0,0) {};
+        \end{scope}
+        \draw
+            (OA.+) -- ++(-2,0) to [V, l_=$V_{2}$] ++(0,-1) node[ground] {}
+            (OA.-) to [R, l_=$R_1$] ++(-4, 0) to [V, l_=$V_1$] ++(0,-2.4) node[ground] {}
+            (OA.out) -- ++(1,0) node[right]{$V_{out}$};
+
+        \draw
+            (OA.up) -- ++(0,1) node[above]{$+V_{cc}$};
+
+        \draw
+            (OA.down) -- ++(0,-1) node[below]{$-V_{cc}$};
+        
+        \coordinate (topV_minus) at ($(OA.-) + (0, 2.5)$);
+        \coordinate (startarrow) at ($(OA.-) + (-1.25, 0)$);
+
+        \draw[->]
+            (startarrow) -- ++(1,0) node[midway, above] {$I_1$};
+
+        \draw[->]
+            (topV_minus) -- ++(1,0) node[midway, above] {$I_2$};
+
+        \node[circ] at (OA.-) {};
+        \node[below] at (OA.-) {$V^-$};
+        \node[circ] at (OA.+) {};
+        \node[below] at (OA.+) {$V^+$};
+        \node[circ] at (OA.out) {};
+
+        \draw
+            (OA.-) -- (topV_minus) to [R, l=$R_2$] ++(3.5,0) -- (OA.out);
+
+        
+    \end{circuitikz}
+    \caption{Operacioni pojačavač sa dva ulaza}
+    \label{fig:opamp_zad1}
+    \end{figure}
+
+    Razmisliti: Kako različiti odnosi ulaza $V_1$ i $V_2$ utiču na izlaz operacionog pojačavača?
+\end{zadatak}
+
+\begin{zadatak}
+    Odrediti izraz za izlaz iz sabirača sa slike \ref{fig:opamp_zad2}.
+
+    \begin{figure}[ht]
+    \centering
+    \begin{circuitikz}[american]
+        \begin{scope}
+            \ctikzset{tripoles/op amp/width=2.5,   % default 2.5
+                    tripoles/op amp/height=2}    % default 2
+            \node[op amp] (OA) at (0,0) {};
+        \end{scope}
+
+        \coordinate (crossroad) at ($(OA.+) + (-2,-0.5)$);
+
+        \draw
+            (OA.+) -- ++(-2,0) -- ++(0, -0.5) to [R, l=$R$] ++(-2, 0) to [V, l=$V_1$] ++ (-1,0) node[ground] {}
+            (OA.-) to [R, l_=$R_1$] ++(-4, 0) node[ground] {}
+            (OA.out) -- ++(1,0) node[right]{$V_{out}$};
+        \draw
+            (crossroad) -- ++(0,-2) to [R, l=$R$] ++(-2, 0) to [V, l=$V_2$] ++ (-1,0) node[ground] {};
+        
+        \draw
+            (OA.up) -- ++(0,1) node[above]{$+V_{cc}$};
+
+        \draw
+            (OA.down) -- ++(0,-1) node[below]{$-V_{cc}$};
+        
+        \coordinate (topV_minus) at ($(OA.-) + (0, 2.5)$);
+        \coordinate (startarrow) at ($(OA.-) + (-1.25, 0)$);
+
+        \draw[->]
+            (startarrow) -- ++(1,0) node[midway, above] {$I_1$};
+
+        \draw[->]
+            (topV_minus) -- ++(1,0) node[midway, above] {$I_2$};
+
+        \node[circ] at (OA.-) {};
+        \node[below] at (OA.-) {$V^-$};
+        \node[circ] at (OA.+) {};
+        \node[below] at (OA.+) {$V^+$};
+        \node[circ] at (OA.out) {};
+
+        \draw
+            (OA.-) -- (topV_minus) to [R, l=$R_2$] ++(3.5,0) -- (OA.out);
+
+        
+    \end{circuitikz}
+    \caption{Sabirač}
+    \label{fig:opamp_zad2}
+    \end{figure}
+    Razmisliti: Kako bi izgledao izlaz operacionog pojačavača za sličnu konfiguraciju na invertujućem ulazu?
+\end{zadatak}

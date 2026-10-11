@@ -6,7 +6,8 @@
 \usepackage{graphicx}
 \usepackage{fontspec}
 \usepackage{polyglossia}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
+\usepackage{amsmath}
 
 \setmainlanguage{serbian}
 \setdefaultlanguage[script=Latin]{serbian}
@@ -56,8 +57,7 @@ je na slici \ref{fig:signal_acquisition}.}
     \item {Pretvarač - pretvara jednu vrstu energije u drugu. Senzori pretvaraju neki oblik 
     energije u električnu energiju, odnosno pretvaraju fiziološke signale u električne signale (npr. elektrode).}
     \item {Pojačavač - pojačava signal na ulazu koji je u većini slučajeva veoma slab i samim tim 
-    je otežana njegova detekcija i obrada. Njihova uloga je da pojačaju amplitudu signala na ulazu
-    , kako bi proizveli što verniju reprezentaciju signala.}
+    je otežana njegova detekcija i obrada. Njihova uloga je da pojačaju amplitudu signala na ulazu, kako bi proizveli što verniju reprezentaciju signala.}
     \item {Filter - uklanja neželjene komponente signala, odnosno šum.}
     \item {A/D konvertor - pretvara analogni signal u digitalni signal pogodan za dalju obradu na računaru.}
     \item {Računar - vrši obradu signala i omogućava vizuelizaciju signala.}
@@ -101,7 +101,7 @@ je na slici \ref{fig:signal_acquisition}.}
 {Primenom drugog Kirhofovog zakona na konturu $K_1$ dobija se izraz za napon u kolu}
 
 \begin{equation}
-    -V_{in} + V_{R_1} + V_{R_2} = 0, odnosno
+    -V_{in} + V_{R_1} + V_{R_2} = 0, \text{odnosno}
 \end{equation}
 
 \begin{equation}
@@ -109,7 +109,7 @@ je na slici \ref{fig:signal_acquisition}.}
     \label{eq:cont}
 \end{equation}
 
-{Nakon uvrstanja jednačine (\ref{eq:ohm}) u (\ref{eq:cont}) dobija se}
+{Nakon uvrštavanja jednačine (\ref{eq:ohm}) u (\ref{eq:cont}) dobija se}
 
 \begin{equation}
     V_{in} = R_1 \cdot I + R_2 \cdot I,
@@ -122,10 +122,10 @@ je na slici \ref{fig:signal_acquisition}.}
     \label{eq:current}
 \end{equation}
 
-{Gde se uvrštanjem jednačine (\ref{eq:current}) u izraz za napon na otpornicima (\ref{eq:ohm}) dobija}
+{Gde se uvrštavanjem jednačine (\ref{eq:current}) u izraz za napon na otpornicima (\ref{eq:ohm}) dobija}
 
 \begin{equation}
-    V_{R_1} = \frac{V_{in}}{R_1 + R_2} R_1 \quad i \quad V_{R_2} = \frac{V_{in}}{R_1 + R_2} R_2.
+    V_{R_1} = \frac{V_{in}}{R_1 + R_2} R_1 \quad \text{i} \quad V_{R_2} = \frac{V_{in}}{R_1 + R_2} R_2.
 \end{equation}
 
 {Naponski razdelnik deli ulazni napon na dva napona čije vrednosti zavise od otpronosti samih otpornika.}
@@ -173,7 +173,7 @@ je na slici \ref{fig:signal_acquisition}.}
 odnosno važi da su $V_{R_1}$ i $V_{R_2}$ jednaki. Za kolo važi da je}
 
 \begin{equation}
-    V_{in} = V_{R_1} = V_{R_2} \quad i
+    V_{in} = V_{R_1} = V_{R_2} \quad \text{i} \quad
 \end{equation}
 
 \begin{equation}
@@ -202,135 +202,83 @@ koji predstavlja kombinaciju njihovih otpornosti, čime se dobija izraz za napon
 \pagebreak
 \section{Tevenenova i Nortonova teorema}
 
-{Tevenenova teorema omogućava da se složeno linearno električno kolo zameni ekvivalentnim kolom koje 
-se sastoji od jednog naponskog generatora i jednog otpornika.}
+Tevenenova i Nortonova teorema opisuju kako se svako linearno kolo, posmatrano sa dva priključka, može zameniti jednostavnijim ekvivalentnim kolom. Ekvivalent važi za sve napone i struje koje se mogu dobiti na tim priključcima, uključujući i kada je priključeno opterećenje.
 
-\begin{figure}[ht]
-    \centering
-    \begin{circuitikz}[american]
-        \draw
-            (0,0) to[V,invert, l=$V_{in}$] (0,3)
-            -- (2,3)
-            to[R, l=$R_1$] (2,0)
-            -- (0,0);
+\subsection{Tevenenova teorema}
 
-        \draw
-            (2,3) -- (4,3)
-            to[R, l=$R_2$] (4,0)
-            -- (2,0);
-
-        \draw
-            (4,3) -- (6,3)
-            to[R, l=$R_i$] (6,0)
-            -- (4,0);
-
-        \draw
-            (6,3) -- (7,3) node[right]{$a$};
-        \draw
-            (6,0) -- (7,0) node[right]{$b$};
-    \end{circuitikz}
-    \label{fig:tevenen_original}
-\end{figure}
-
-{Prema Tevenenovoj teoremi, deo linearnog električnog kola koji se nalazi između priključaka $a$ i $b$
-može se zameniti ekvivalentnim kolom koje se sastoji od Tevenenovog naponskog generatora $E_{th}$ i
-Tevenenovog otpornika $R_{th}$.}
-
-\begin{figure}[ht]
-    \centering
-    \begin{circuitikz}[american]
-        \draw
-            (0,0) to[V, invert, l=$E_{th}$] (0,3)
-            -- (3,3)
-            to[R, l=$R_{th}$] (3,0)
-            -- (0,0);
-
-        \draw
-            (3,3) -- (4,3) node[right]{$a$};
-        \draw
-            (3,0) -- (4,0) node[right]{$b$};
-    \end{circuitikz}
-    \label{fig:tevenen_ekvivalentna}
-\end{figure}
-
-{Tevenenov otpornik $R_{th}$ predstavlja ekvivalentni otpornik kola posmatran između priključaka $a$ i $b$,
-pri čemu se naponski izvori zamenjuju kratkim spojem, a strujni izvori otvorenim kolom.}
-
-Nortonova teorema omogućava da se složeno linearno električno kolo, posmatrano sa dva priključka, zameni ekvivalentnim kolom koje se sastoji od jednog strujnog generatora i jednog otpornika.
-
-\begin{figure}[ht]
-    \centering
-    \begin{circuitikz}
-        \draw
-            (0,0) to[V, invert, l=$V_{in}$] (0,3)
-            -- (2,3)
-            to[R, l=$R_1$] (2,0)
-            -- (0,0);
-
-        \draw
-            (2,3) -- (4,3)
-            to[R, l=$R_2$] (4,0)
-            -- (2,0);
-
-        \draw
-            (4,3) -- (6,3)
-            to[R, l=$R_i$] (6,0)
-            -- (4,0);
-
-        \draw
-            (6,3) -- (7,3) node[right]{$a$};
-        \draw
-            (6,0) -- (7,0) node[right]{$b$};
-    \end{circuitikz}
-    \caption{Primer složenog linearnog kola sa priključcima $a$ i $b$.}
-    \label{fig:norton_original}
-\end{figure}
-
-Prema Nortonovoj teoremi, deo linearnog električnog kola koji se nalazi između priključaka $a$ i $b$ može se zameniti ekvivalentnim kolom koje se sastoji od Nortonovog strujnog generatora $I_N$ i Nortonovog otpora $R_N$.
-
-\begin{figure}[ht]
-    \centering
-    \begin{circuitikz}[american]
-        \draw
-            (0,0) -- (0,3)
-            to[I, l=$I_N$] (3,3)
-            to[R, l=$R_N$] (3,0)
-            -- (0,0);
-
-        \draw
-            (3,3) -- (4,3) node[right]{$a$};
-        \draw
-            (3,0) -- (4,0) node[right]{$b$};
-    \end{circuitikz}
-    \caption{Nortonovo ekvivalentno kolo.}
-    \label{fig:norton_equivalent}
-\end{figure}
-
-Nortonova struja $I_N$ predstavlja struju kratkog spoja između priključaka $a$ i $b$:
-
-Nortonov otpor $R_N$ predstavlja ekvivalentni otpor kola posmatran između priključaka $a$ i $b$, pri čemu se nezavisni naponski izvori zamenjuju kratkim spojem, a nezavisni strujni izvori otvorenim kolom.
-
-Nakon određivanja $I_N$ i $R_N$, originalno kolo može se zameniti Nortonovim ekvivalentom. Ukoliko se na priključke $a$ i $b$ poveže otpornik $R_L$, napon na opterećenju može se odrediti pomoću Omovog zakona:
+Tevenenov ekvivalent čine idealni naponski izvor $E_{th}$ i redno vezan otpornik $R_{th}$. Napon $E_{th}$ jednak je naponu između priključaka:
 
 \[
-U_L = I_N \frac{R_N R_L}{R_N+R_L}
+E_{th}=V_{ab}.
 \]
 
-\subsection{Postupak određivanja Nortonovog ekvivalenta}
+Otpornost $R_{th}$ je otpornost viđena sa priključaka $a$ i $b$ kada se nezavisni izvori deaktiviraju: idealni naponski izvori zamenjuju se kratkim spojem, a idealni strujni izvori otvorenim kolom. Zavisni izvori se ne deaktiviraju.
 
-Za određivanje Nortonovog ekvivalentnog kola potrebno je:
+\begin{figure}[ht]
+\centering
+\begin{circuitikz}[american]
+  % Primer dvopola: naponski izvor, serijski otpornik i izlazni priključci
+  \draw (0,0) to[V, invert,l_=$V_s$] (0,3)
+        to[R,l=$R_1$] (3,3) to[R, l=$R_2$] (6,3) to[R, l=$R_i$] (9,3) -- (10,3) node[ocirc,label=right:$a$]{};
+  \draw (0,0) -- (10,0) node[ocirc,label=right:$b$]{};
+\end{circuitikz}
+\caption{Primer linearnog kola koji se posmatra sa priključaka $a$ i $b$.}
+\label{fig:linearni_dvopol}
+\end{figure}
 
-\begin{enumerate}
-    \item ukloniti opterećenje $R_L$ iz kola,
-    \item kratko spojiti priključke $a$ i $b$ i odrediti struju kratkog spoja, čime se dobija $I_N$,
-    \item deaktivirati nezavisne izvore u kolu,
-    \item odrediti ekvivalentni otpor između priključaka $a$ i $b$ i time dobiti $R_N$,
-    \item formirati Nortonovo ekvivalentno kolo sa strujnim generatorom $I_N$ i otpornikom $R_N$.
-\end{enumerate}
+{Gde je $V_s$ naponski izvor, $R_1$, $R_2$ i $R_i$ su otpornici, a $a$ i $b$ su priključci. Ekvivalentni otpornik $R_{th}$ se dobija kada se deaktivira naponski izvor $V_s$, odnosno kada se on zameni kratkim spojem i onda računanjem ekvivalentne otpornosti kola. Tevenenov napon $E_{th}$ se dobija kada se izračuna napon između priključaka $a$ i $b$ u originalnom kolu.}
 
-\pagebreak
-\section{Uvod u LTSpice}
+\begin{figure}[ht]
+\centering
+\begin{circuitikz}[american]
+  \draw (0,0) to[V, invert, l_=$E_{th}$] (0,3)
+        to[R,l=$R_{th}$] (3,3) -- (4,3) node[ocirc,label=above:$a$]{};
+  \draw (0,0) -- (4,0) node[ocirc,label=below:$b$]{};
+  \draw (5, 3) node[ocirc, label=right:$a$]{} to [R, l=$R_L$] (5,0) node[ocirc, label=right:$b$]{};
+  \draw[dashed] (4,3) -- (5,3);
+  \draw[dashed] (4,0) -- (5,0);
+\end{circuitikz}
+\caption{Tevenenov ekvivalent posmatranog kola.}
+\label{fig:tevenen_ekvivalentna}
+\end{figure}
 
-\href{https://ltspice.analog.com/software/LTspice64.msi}{LTSpice} je softverski paket koji omogućava simulaciju električnih kola. LTSpice je besplatan i dostupan za preuzimanje sa zvaničnog sajta proizvođača. LTSpice omogućava simulaciju različitih tipova kola, uključujući linearna i nelinearna kola, kao i analizu u vremenskoj i frekvencijskoj domeni.
+Kada se priključi opterećenje $R_L$, ono je redno vezano sa $R_{th}$ u Tevenenovom ekvivalentu. Zato važe
+\[
+ I_L=\frac{E_{th}}{R_{th}+R_L},\qquad
+ V_L=I_LR_L=E_{th}\frac{R_L}{R_{th}+R_L}.
+\]
+
+\subsection{Nortonova teorema}
+
+Nortonov ekvivalent čine idealni strujni izvor $I_N$ i otpornik $R_N$ vezani paralelno. Nortonova struja je struja kratkog spoja između izlaznih priključaka, uz izabrani smer od $a$ ka $b$:
+\[
+ I_N=I_{ab}.
+\]
+Nortonova otpornost $R_N$ određuje se na isti način kao Tevenenov otpornost.
+
+\begin{figure}[ht]
+\centering
+\begin{circuitikz}[american]
+  \draw (0,0) -- (3,0);
+  \draw (0,3) -- (3,3);
+  \draw (0,0) to[I,l_=$I_N$] (0,3);
+  \draw (1.5,0) to[R,l_=$R_N$] (1.5,3);
+  \draw (3,3) -- (4,3) node[ocirc,label=above:$a$]{};
+  \draw (3,0) -- (4,0) node[ocirc,label=below:$b$]{};
+  \draw (5,0) node[ocirc,label=right:$b$]{} to [R, l_=$R_L$] (5,3) node[ocirc,label=right:$a$]{};
+  \draw[dashed] (4,3) -- (5,3);
+  \draw[dashed] (4,0) -- (5,0);
+\end{circuitikz}
+\caption{Nortonov ekvivalent: izvor struje i otpornik vezani su paralelno.}
+\label{fig:norton_equivalent}
+\end{figure}
+
+Sa opterećenjem $R_L$ priključenim na Nortonov ekvivalent, struja izvora se deli između $R_N$ i $R_L$. Napon i struja opterećenja su
+\[
+ V_L=I_N(R_N\parallel R_L)=I_N\frac{R_NR_L}{R_N+R_L},\qquad
+ I_L=\frac{V_L}{R_L}=I_N\frac{R_N}{R_N+R_L}.
+\]
+
+\include{zadaci.tex}
 
 \end{document}

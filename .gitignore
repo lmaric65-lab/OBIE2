@@ -17,6 +17,13 @@
 *.blg
 *.pdf
 *.ipynb
+*.asc
+*.op.raw
+*.raw
+*.op
+
+Vezbe02/
+
 
 # OS/editor files
 .DS_Store

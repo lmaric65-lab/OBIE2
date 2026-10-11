@@ -1,6 +1,6 @@
 \section{Operacioni pojačavač}
 
-{Operacioni pojačavac je aktivna poluprovodnička komponenta, realizovana pomoću poluprovodničkih komponenata (prvenstveno tranyistora), koja pojačava razliku potencijala na svojim ulazima. Aktivna je komponenta
+{Operacioni pojačavac je aktivna poluprovodnička komponenta, realizovana pomoću poluprovodničkih komponenata (prvenstveno tranzistora), koja pojačava razliku potencijala na svojim ulazima. Aktivna je komponenta
 zato što za svoj rad zahteva spoljašnje napajanje, čime se omogućava
 da izlazni signal ima veću snagu od ulaznog signala.
 Izgled operacionog pojačavača je prikazan na slici \ref{fig:opamp}.}
@@ -36,25 +36,15 @@ Ovo je dato sledećim izrazom}
 
 \begin{equation}
     V_{out} = A_{o} \cdot (V^{+} - V^{-}).
+    \label{eq:basic_eq}
 \end{equation}
 
 {$A_{o}$ predstavlja pojačanje operacionog pojačavača
 u otvorenoj sprezi. Njegova vrednost zavisi od karakteristika
-i specifikacije konkretnog operacionog pojačavača, obično je reda veličine $10^6$ do $10^8$. Vrednosti na izlazu operacionog pojačavača su ograničene napajanjem, tako da se uvek kreću između $+V_{cc}$ i $-V_{cc}$. Iz ovog zaključka može se izvesti izraz za maksimalnu vrednost ulaza operacionog pojačavača}
+i specifikacije konkretnog operacionog pojačavača, obično je reda veličine $10^6$ do $10^8$. Vrednosti na izlazu operacionog pojačavača su ograničene napajanjem, tako da se uvek kreću između $+V_{cc}$ i $-V_{cc}$. Kako se izlazne vrednosti operacionog pojačavača kreću u intervalu od $-V_{cc}$ do $+V_{cc}$, uvodi se pojam prenosne karakteristike koja predstavlja zavisnost izlaznog napona od ulaznog.}
 
-\begin{equation}
-    -V_{cc} \le V_{out} \le +V_{cc},
-\end{equation}
+{Operacioni pojačavač ima dva režima rada: linearni režim rada i zasićenje. Kada se operacioni pojačavač nalazi u zasićenju njegov izlaz dolazi u stanje u kom za nove promene ulaznog napona $V_{in}$, ne dolazi do promena izlaznog napona $V_{out}$. U linearnom režimu rada operacioni pojačavač pojačava ulazni napon prema obrascu datom u izrazu \ref{eq:basic_eq}}
 
-{odnosno zato što je $V_{out} = A_o V_{in}$}
-
-\begin{equation}
-    \frac{-V_{cc}}{A_o} \le V_{in} \le \frac{+V_{cc}}{A_o}.
-\end{equation}
-
-{Demonstracija u \href{https://www.desmos.com/calculator/83gqbywenh}{Desmos}-u}
-
-\pagebreak
 \subsection{Karakteristike idealnog operacionog pojačavača}
 
 {Shema idealnog operacionog pojačavača data je na slici \ref{fig:opamp_ideal}.}
@@ -74,10 +64,50 @@ ima sledeće karakteristike:}
     ima beskonačno veliko pojačanje, što znači da će i za najmanju razliku potencijala 
     na ulazu imati beskonačno veliki izlazni napon.
     \item {$Z_{in} = \infty$} - operacioni pojačavač ima beskonačno veliku ulaznu impedansu, što znači da ne teče struja kroz ulazne priključke operacionog pojačavača.
-    \item {$Z_{out} = 0$} - operacioni pojačavač ima nultu ulaznu impedansu, što znači da se ponaša kao idealni naponski izvor (ne opterećuje kolo na bilo koji način).
+    \item {$Z_{out} = 0$} - operacioni pojačavač ima nultu izlaznu impedansu, što znači da se ponaša kao idealni naponski izvor (ne opterećuje kolo na bilo koji način, odnosno ne dolazi do pada napona na izlazu kola ($V_{out} = V_{gen}$)).
     \item {Karakteristike rada operacionog pojačavača ne zavise od frekvencije ulaznog signala}
 \end{enumerate}
 
-{Ovakva izvedba operacionog pojačavača predstavlja samo idealizovan matematički
-model i kao takav nije ga moguće realizovati u praksi. Već se on može
-posmatrati kao nešto čemu inženjeri teže pri dizajniranju operacionih pojačavača.}
+{Ovakva izvedba operacionog pojačavača predstavlja samo idealizovan matematički model i kao takav nije ga moguće realizovati u praksi. Već se on može posmatrati kao nešto čemu inženjeri teže pri dizajniranju operacionih pojačavača.}
+
+{Prenosna karakteristika idealnog operacionog pojačavača predstavljena je na grafiku \ref{fig:opamp_transfer}.}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[x=1.4cm, y=1.4cm]
+
+        \draw[gray!25, thin] (-4,0) -- (4,0);
+        \draw[gray!25, thin] (0,-1.5) -- (0,1.5);
+
+        \draw[blue!55, thick]
+            (-4,-0.65) --
+            (0,-0.65) --
+            (0,0.65) --
+            (4,0.65);
+
+        \node[above] at (0,1.5) {$V_{\mathrm{out}}$};
+        \node[above left] at (4,0) {$V_{\mathrm{in}}$};
+
+        \node[left] at (0,0.65) {$+V_{CC}$};
+        \node[right] at (0,-0.65) {$-V_{CC}$};
+
+    \end{tikzpicture}
+    \caption{Prenosna karakteristika idealnog operacionog pojačavača u otvorenoj sprezi.}
+    \label{fig:opamp_transfer}
+\end{figure}
+
+{Izlaz idealnog pojačavača može da ima 3 različite vrednosti i one su date izrazom}
+
+\begin{equation}
+    V_{\mathrm{out}} =
+    \begin{cases}
+        +V_{CC}, & V_{in} > 0, \\
+        -V_{CC}, & V_{in} < 0, \\
+        0,       & V_{in} = 0.
+    \end{cases}
+    \label{eq:out_ideal}
+\end{equation}
+
+{Kao što se može uočiti sa grafika i iz izraza \ref{eq:out_ideal}, za svaku vrednost ulaznog napona različitu od nule, izlazni napon operacionog pojačavača dostiže jednu od granica napajanja, u zavisnosti od znaka ulaznog signala. To znači da se operacioni pojačavač u otvorenoj sprezi praktično uvek nalazi u stanju saturacije, zbog čega nije pogodan za linearno pojačavanje signala. Međutim, ovakvo ponašanje omogućava njegovu primenu za poređenje naponskih nivoa, odnosno detekciju da li je ulazni napon veći ili manji od određene referentne vrednosti (komparator).}
+
+{Izraz \ref{eq:out_ideal} nije u potpunosti tačan, već predstavlja idealizovani model, u realnosti čak i kod izvedbe pojačavača u otvorenoj sprezi postoji uska oblast u kojoj on radi u linearnom režimu, ali se radi jednostavnosti ona u ovom slučaju ne uzima u obzir.}

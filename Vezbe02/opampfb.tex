@@ -1,12 +1,86 @@
 \section{Operacioni pojačavač u zatvorenoj sprezi}
 
-{Problem kod izvedbe operacionog pojačavača u otvorenoj sprezi je u tome što se izlazni napon $V_{out}$ veoma lako može dovesti u stanje saturacije. Zbog veoma velikog pojačanja $A_{o}$, čak i izuzetno male vrednosti diferencijalnog napona na ulazu mogu dovesti do maksimalne vrednosti izlaznog napona. Zbog toga je operacioni pojačavač u otvorenoj sprezi praktično neupotrebljiv za potrebe linearnog pojačanja signala. Na primer, ako bi diferencijalni napon na ulazu iznosio $1,\mu\mathrm{V}$, na izlazu bi se dobila vrednost od $100,\mathrm{V}$. Međutim, isti izlazni napon bi se dobio i za ulazne napone od $10,\mu\mathrm{V}$, $100,\mu\mathrm{V}$, $1,\mathrm{mV}$ itd. Na taj način praktično nije moguće razlikovati različite vrednosti ulaznog signala, jer sve one rezultuju istom vrednošću izlaznog signala, odnosno ne dobijamo linearno mapiranje ulaznog signala na izlazni signal.}
+{Problem kod izvedbe operacionog pojačavača u otvorenoj sprezi je u tome što se pojačavač veoma lako može dovesti u stanje saturacije. Zbog veoma velikog pojačanja $A_{o}$, čak i izuzetno male vrednosti diferencijalnog napona na ulazu mogu dovesti do maksimalne vrednosti izlaznog napona. Zbog toga je operacioni pojačavač u otvorenoj sprezi praktično neupotrebljiv za potrebe linearnog pojačanja signala. Na primer, ako bi diferencijalni napon na ulazu iznosio $1\mu\mathrm{V}$, na izlazu bi se dobila vrednost od $100\mathrm{V}$. Međutim, isti izlazni napon bi se dobio i za ulazne napone od $10\mu\mathrm{V}$, $100\mu\mathrm{V}$, $1\mathrm{mV}$ itd. Na taj način praktično nije moguće razlikovati različite vrednosti ulaznog signala, jer sve one rezultuju istom vrednošću izlaznog signala, odnosno ne dobijamo linearno mapiranje ulaznog signala na izlazni signal.}
 
-{Zbog toga se operacioni pojačavači u praksi koriste u zatvorenoj sprezi, pri čemu se deo izlaznog signala vraća na ulaz operacionog pojačavača. Na taj način se postiže rad operacionog pojačavača u linearnom režimu, odnosno omogućava se da se izlazni signal $V_{out}$ menja u skladu sa ulaznim signalom $V_{in}$, pri čemu se izbegava saturacija. Ovime se dobija linearno mapiranje ulaznog signala na izlazni.}
+{Zbog toga se operacioni pojačavači u praksi koriste u zatvorenoj sprezi, pri čemu se deo izlaznog signala vraća na ulaz pojačavača. Na taj način se postiže rad operacionog pojačavača u linearnom režimu, odnosno omogućava se da se izlazni signal $V_{out}$ menja u skladu sa ulaznim signalom $V_{in}$, pri čemu se izbegava saturacija. Ovime se dobija linearno mapiranje ulaznog signala na izlazni i prenosna karakteristika ovoga je prikazana na grafiku \ref{fig:opamp_real_transfer}.}
 
-{Postoje dve izvedbe operacionog pojačavača u zatvorenoj sprezi koje se najčešće koriste, a to su: neinvertujući i invertujući operacioni pojačavač.}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        x=1.35cm,
+        y=1.35cm,
+        line cap=round,
+        line join=round,
+        font=\small
+    ]
 
-\subsection{Neinvertujući operacioni pojačavač}
+        % Parametri grafika
+        \def\xsat{0.65}
+        \def\ysat{0.85}
+
+        % Koordinatne ose
+        \draw[gray!50, thin, -stealth]
+            (-4.3,0) -- (4.3,0)
+            node[right, black] {$V_{\mathrm{in}}$};
+
+        \draw[gray!50, thin, -stealth]
+            (0,-1.45) -- (0,1.45)
+            node[above, black] {$V_{\mathrm{out}}$};
+
+        % Prenosna karakteristika
+        \draw[blue!65, line width=1.15pt]
+            (-4,-\ysat) --
+            (-\xsat,-\ysat) --
+            (\xsat,\ysat) --
+            (4,\ysat);
+
+        % Granice linearne oblasti
+        \draw[blue!35, thin, dashed]
+            (-\xsat,-\ysat) -- (-\xsat,0);
+
+        \draw[blue!35, thin, dashed]
+            (\xsat,0) -- (\xsat,\ysat);
+
+        % Oznake napona saturacije
+        \node[anchor=east] at (-0.15,\ysat)
+            {$+V_{CC}$};
+
+        \node[anchor=west] at (0.15,-\ysat)
+            {$-V_{CC}$};
+
+        % Oznake granica linearne oblasti
+        \node[anchor=south east] at
+            (-\xsat-0.10,0.12)
+            {$-\frac{V_{CC}}{A_o}$};
+
+        \node[anchor=north west] at
+            (\xsat+0.10,-0.12)
+            {$+\frac{V_{CC}}{A_o}$};
+
+    \end{tikzpicture}
+
+    \caption{Prenosna karakteristika
+    operacionog pojačavača u zatvorenoj sprezi.}
+    \label{fig:opamp_real_transfer}
+\end{figure}
+
+{Nakon uvođenja povratne sprege pojavljuje se linearna zavisnost ulaza i izlaza. Kako bi ulazni napon $V_{in}$ bio adekvatno linearno mapiran na izlazni napon, on mora da zadovoljava sledeću nejednakost}
+
+\begin{equation}
+    -V_{cc} \le V_{out} \le +V_{cc}, 
+\end{equation}
+
+{odnosno zato što je $V_{out} = A_o V_{in}$, važi}
+
+\begin{equation}
+    -\frac{V_{cc}}{A_o} \le V_{in} \le +\frac{V_{cc}}{A_o}.
+\end{equation}
+
+{Ovo ne znači da se na ulaz pojačavača $V_{in}$ ne može dovesti napon veći od vrednosti napona $-\frac{V_{cc}}{A_o}$, već se taj napon neće adekvatno linearno mapirati na izlaz, odnosno pojačavač će se naći u stanju saturacije.}
+
+{Postoje dve izvedbe operacionog pojačavača u zatvorenoj sprezi koje se najčešće koriste, a to su: neinvertujući i invertujući pojačavač.}
+
+\subsection{Neinvertujući pojačavač}
 
 \begin{figure}[ht]
     \centering
@@ -47,11 +121,11 @@
 
         
     \end{circuitikz}
-    \caption{Neinvertujući operacioni pojačavač}
+    \caption{Neinvertujući pojačavač}
     \label{fig:opamp_noninverting}
 \end{figure}
 
-{U konfiguraciji neinvertujećeg operacionog pojačavača ulazni signal $V_{in}$ povezan je na neinvertujući ulaz $V^+$ operacionog pojačavača, a invertujući ulaz se preko otpornika $R_1$ dovodi na masu. Pod pretpostavkom da se radi o idealnom operacionom pojačavaču važi da je}
+{U konfiguraciji neinvertujećeg pojačavača ulazni signal $V_{in}$ povezan je na neinvertujući ulaz $V^+$ operacionog pojačavača, a invertujući ulaz se preko otpornika $R_1$ dovodi na masu. Pod pretpostavkom da se radi o idealnom operacionom pojačavaču važi da je}
 
 \begin{equation}
     V^- = V^+ = V_{in}.
@@ -129,13 +203,13 @@
     \label{fig:opamp_inverting}
 \end{figure}
 
-{U ovoj konfiguraciji operacionog pojačavača se neinvertujući ulaz $V^+$ povezuje na masu, a na invertujući ulaz je povezano ulazno napajanje $V_{in}$ preko otpornika $R_1$. Pod pretpostavkom da se radi o idealnom operacionom pojačavaču može da se zaključi da su tačke $V^-$ i $V^+$ na istom potencijalu, odnosno da je $V^-$ povezan na virtuelnu masu preko $V^+$ i važi}
+{U ovoj konfiguraciji operacionog pojačavača se neinvertujući ulaz $V^+$ povezuje na masu, a na invertujući ulaz je povezan ulazni signal $V_{in}$ preko otpornika $R_1$. Pod pretpostavkom da se radi o idealnom operacionom pojačavaču može da se zaključi da su tačke $V^-$ i $V^+$ na istom potencijalu, odnosno da je $V^-$ povezan na virtuelnu masu preko $V^+$ i važi}
 
 \begin{equation}
     V^- = V^+ = 0
 \end{equation}
 
-{Kao i kod izvedbe neinvertujućeg operacionog pojačavača i ovde je izraz za struju u kolu}
+{Kao i kod izvedbe neinvertujućeg pojačavača i ovde je izraz za struju u kolu}
 
 \begin{equation}
     I_1 = \frac{V_{in} - 0}{R_1} \quad i \quad I_2 = \frac{0 - V_{out}}{R_2},

@@ -1,37 +1,46 @@
+\newpage
 \section{Zadaci}
 
 \newtheorem{zadatak}{Zadatak}
 
 \begin{zadatak}
-    Odrediti izraz za signal na ulazu operacionog pojačavača u otvorenoj sprezi kako bi se na izlazu u potpunosti preneo ulazni signal ako je
-    $A_o = 1\,M\,\frac{V}{V}$ i $\pm V_{cc} = \pm 10\,V$.
+    Operacioni pojačavač u otvorenoj sprezi ima sledeće karakteristike: $A_o = 1\,M\,\frac{V}{V}$ \text{i} $\pm V_{cc} = \pm 10V$.Odrediti:\newline
 
     \begin{enumerate}
-        \item[a)] Prikazati odnos ulaza i izlaza za dati operacioni pojačavač.
+        \item[a)] Vrednost izlaza operacionog pojačavača za proizvoljno velik ulazni signal (npr. $1\,V$),
         
-        \item[b)] Prikazati izlaz operacionog pojačavača za proizvoljni ulazni signal.
+        \item[b)] Prikazati prenosnu karakteristiku datog operacionog pojačavača 
+        \item[c)] Odrediti adekvatan ulazni signal koji će se u potpunosti propustiti kroz operacioni pojačavač.
     \end{enumerate}
-    Razmisliti: Šta ako se ulazni signal dovede na invertujući ulaz operacionog pojačavača, a šta ako se dovede na neinvertujući? Šta ako se dovedu 2 ulaza na invertujući i neinvertujući ulaz operacionog pojačavača?
+
+    Razmisliti: Šta ako se ulazni signal dovede na invertujući ulaz operacionog pojačavača, a šta ako se dovede na neinvertujući? Šta ako se dovedu 2 ulaza na invertujući i neinvertujući ulaz operacionog pojačavača? Kako se menja prenosna karakteristika sa promenom parametara operacionog pojačavača?
+
+    \textbf{NAPOMENA:} Pri simulaciji koristiti UniversalOpAmp2
 \end{zadatak}
 
 \begin{zadatak}
-    Odrediti signal na izlazu neinvertujućeg operacionog pojačavača i odnos ulaza i izlaza operacionog pojačavača ako su otpornosti $R_1 = 10 \,k\Omega$ i $R_2 = 50 \,k\Omega$, a napon napajanja $\pm V_{cc} = \pm 10\,V$. Na ulaz operacionog pojačavača se dovode signali:
+    Odrediti signal na izlazu neinvertujućeg pojačavača i prenosnu karakteristiku ako su otpornosti $R_1 = 10 \,k\Omega$ i $R_2 = 50 \,k\Omega$, a napon napajanja $\pm V_{cc} = \pm 10\,V$. Na ulaz operacionog pojačavača se dovode signali:
     \begin{enumerate}
         \item[a)] $1V\sin{(100 \pi t)}$ i
         
         \item[b)] $3V\sin{(100 \pi t)}$.
     \end{enumerate}
-    Prikazati simulaciju u trajanju od 0.01 sekunde.
+    Prikazati simulaciju u trajanju od 0.1 sekunde.
+    \newline
+    Razmisliti: Kako se menja prenosna karakteristika sa promenom vrednosti otpornika $R_1$ i $R_2$?
+    \newline
+    \textbf{NAPOMENA:} Pri simulaciji koristiti UniversalOpAmp2
 \end{zadatak}
 
 \begin{zadatak}
-    Odrediti signal na izlazu invertujućeg operacionog pojačavača i odnos ulaza i izlaza operacionog pojačavača ako su otpornosti $R_1 = 10 \,k\Omega$ i $R_2 = 50 \,k\Omega$, a napon napajanja $\pm V_{cc} = \pm 10\,V$. Na ulaz operacionog pojačavača se dovode signali:
+    Odrediti signal na izlazu invertujućeg pojačavača i prenosnu karakteristiku operacionog pojačavača ako su otpornosti $R_1 = 10 \,k\Omega$ i $R_2 = 50 \,k\Omega$, a napon napajanja $\pm V_{cc} = \pm 10\,V$. Na ulaz operacionog pojačavača se dovode signali:
     \begin{enumerate}
         \item[a)] $1V\sin{(4 \pi t)}$ i
         
         \item[b)] $3V\sin{(4 \pi t)}$.
     \end{enumerate}
-    Prikazati simulaciju u trajanju od 1 sekunde.
+    Prikazati simulaciju u trajanju od 1 sekunde.\newline
+    \textbf{NAPOMENA:} Pri simulaciji koristiti UniversalOpAmp2
 \end{zadatak}
 
 \pagebreak

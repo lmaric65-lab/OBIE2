@@ -2,6 +2,9 @@
 
 {Na slici \ref{fig:opampreal} predstavljena je shema realnog operacionog pojačavača.}
 
+%TODO: DODATI POSLEDICU STRUJA BIASA I NAPONSKOG OFSETA DA SE VIDI KAKO TO IZGLEDA NA PRENOSNOJ KARAKTERISTICI
+%TODO: MOZDA SADA UVESTI NE SAMO ZA INVERTUJUCI OPERACIONI NEGO I ZA NEINVERTUJUCI KOMPLETNE IZRAZE ZA STRUJE BIASA I NAPONSKOG OFSETA
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.6\textwidth]{opampreal.png}
@@ -12,15 +15,33 @@
 {Na osnovu slike može se zaključiti da realni operacioni pojačavač ima sledeće karakteristike:}
 
 \begin{enumerate}
-    \item {$A_o$ je izuzetno veliko, nije beskonačno.}
-    \item {$Z_{in}$ nije beskonačno} - kao posledicu ovoga pojavljuje se struja u ulaznim priključcima operacionog pojačavača (struja polarizacije).
-    \item {$Z_{out}$ nije nula, već ima neku relativno malu vrednost} - operacioni pojačavač se ne ponaša kao idealni naponski generator, kao posledica ovoga na izlazu operacionog pojačavača imamo različite izlaze od očekivanih (naponski ofset).
-    \item {Karakteristike rada operacionog pojačavača zavise od frekvencije ulaznog signala}.
+    \item $A_o$ je veoma veliko, ali nije beskonačno, što
+    dovodi do odstupanja stvarnog pojačanja od idealnog.
+
+    \item $Z_{in}$ nije beskonačno, već ima konačnu vrednost.
+    Pored toga, zbog unutrašnje strukture ulaznog stepena
+    operacionog pojačavača, na njegovim ulaznim priključcima
+    javljaju se male struje polarizacije.
+
+    \item $Z_{out}$ nije jednako nuli, već ima relativno malu
+    vrednost. Zbog toga se operacioni pojačavač ne ponaša
+    kao idealni naponski generator, pa priključivanje
+    opterećenja može dovesti do odstupanja izlaznog napona
+    od očekivane vrednosti.
+
+    \item Kod realnog operacionog pojačavača prisutan je
+    ulazni naponski ofset, koji predstavlja mali diferencijalni
+    napon potreban da bi izlazni napon pojačavača bio jednak
+    nuli.
+
+    \item Karakteristike operacionog pojačavača zavise od
+    frekvencije ulaznog signala. Sa porastom frekvencije
+    dolazi do smanjenja pojačanja, čime je ograničen
+    frekvencijski opseg rada pojačavača.
 \end{enumerate}
 
 {Svaka od ovih karakteristika biće detaljno opisana u nastavku teksta.}
 
-\pagebreak
 \subsection{Struja polarizacije}
 
 {Struje polarizacije predstavljaju posledicu nesavršenosti realnog operacionog pojačavača. Za razliku od idealnog operacionog pojačavača, kod koga kroz ulazne priključke ne teče struja, kod realnog operacionog pojačavača postoje male ulazne struje koje se nazivaju struje polarizacije. Ove struje mogu izazvati dodatne padove napona na otpornicima u kolu i time dovesti do odstupanja izlaznog napona od njegove idealne vrednosti.}
@@ -67,11 +88,11 @@
             ($(OA.-) + (-0.5, 0)$) -- (topV_minus) to [R, l=$R_2$] ++(4,0) -- (OA.out);
         
     \end{circuitikz}
-    \caption{Izgled operacionog pojačavača u prisustvu struja polarizacije}
+    \caption{Izgled invertujućeg pojačavača u prisustvu struja polarizacije}
     \label{fig:opamp_polarizacije}
 \end{figure}
 
-{Sa slike \ref{fig:opamp_polarizacije} može da se zaključi da se sada uvodi još jedna struja, struja polarizacije $I_b$. Pretpostavljeno je da je ova struja jednaka na oba ulaza, odnosno da važi $I_b = I_{b+} = I_{b-}$ , ovo ne mora uvek biti tačno. Sada se iz tačke $V^-$ može napisati I Kirhofov zakon}
+{Sa slike \ref{fig:opamp_polarizacije} može da se zaključi da se sada uvodi još jedna struja, struja polarizacije $I_b$. Pretpostavljeno je da je ova struja jednaka na oba ulaza, odnosno da važi $I_b = I_{b+} = I_{b-}$ , iako ovo ne mora uvek biti tačno. Sada se iz tačke $V^-$ može napisati I Kirhofov zakon}
 
 \begin{equation}
     I_1 = I_2 + I_b.
@@ -99,11 +120,80 @@
 
 {Iz jednačine može da se primeti da bi došlo do znatnog odstupanja u vrednosti izlaza operacionog pojačavača usled dodatnog sabiranja sa $I_bR_2$ i baš se u tome ogleda sam problem struja polarizacije.}
 
-{Izraz za neinvertujući pojačavač je sličan te neće biti izvođen već će samo biti tad u svojoj finalnoj formi}
+{Izraz za neinvertujući pojačavač je sličan te neće biti izvođen već će samo biti dat u svojoj finalnoj formi}
 
 \begin{equation}
     \boxed{V_{out} = V_{in}(1 + \frac{R_2}{R_1}) + I_bR_2}.
 \end{equation}
+
+{Bitno je napomenuti kakav uticaj struja polarizacije ima na samu prenosnu karakteristiku pojačavača. Kako se dobija novi izraz za $V_{out}$, prenosna karakteristika poprima sledeći oblik}
+
+\begin{equation}
+    \frac{-V_{cc} - I_bR_2}{A_o} \le V_{in} \le \frac{V_{cc} - I_bR_2}{A_o}.
+\end{equation}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        x=1.35cm,
+        y=1.35cm,
+        line cap=round,
+        line join=round,
+        font=\small
+    ]
+
+        % Parametri grafika
+        \def\xsat{0.65}
+        \def\ysat{0.85}
+        \def\xoffset{0.30}
+
+        % Koordinatne ose
+        \draw[gray!50, thin, -stealth]
+            (-4.3,0) -- (4.3,0)
+            node[right, black] {$V_{\mathrm{in}}$};
+
+        \draw[gray!50, thin, -stealth]
+            (0,-1.45) -- (0,1.45)
+            node[above, black] {$V_{\mathrm{out}}$};
+
+        % Prenosna karakteristika bez struja polarizacije
+        \draw[gray!65, dashed, line width=1pt]
+            (-4,-\ysat) --
+            (-\xsat,-\ysat) --
+            (\xsat,\ysat) --
+            (4,\ysat);
+
+        % Prenosna karakteristika sa strujama polarizacije
+        \draw[blue!65, line width=1.15pt]
+            (-4,-\ysat) --
+            ({-\xsat-\xoffset},-\ysat) --
+            ({\xsat-\xoffset},\ysat) --
+            (4,\ysat);
+
+        % Granice linearne oblasti
+        \draw[blue!35, thin, dashed]
+            ({-\xsat-\xoffset},-\ysat) --
+            ({-\xsat-\xoffset},0);
+
+        \draw[blue!35, thin, dashed]
+            ({\xsat-\xoffset},0) --
+            ({\xsat-\xoffset},\ysat);
+
+        % Oznake napona saturacije
+        \node[anchor=east] at (-0.15,\ysat)
+            {$+V_{CC}$};
+
+        \node[anchor=west] at (0.15,-\ysat)
+            {$-V_{CC}$};
+
+    \end{tikzpicture}
+
+    \caption{Uticaj struja polarizacije na prenosnu
+    karakteristiku operacionog pojačavača.}
+    \label{fig:opamp_bias_transfer}
+\end{figure}
+
+{Kao što može da se primeti sa grafika, usled pojave struje polarizacije dobija se pomerena prenosna karakteristika. Veličina pomeraja zavisi od vrednosti struje polarizacije $I_b$ i vrednosti otpornika $R_2$.}
 
 {Kako bi se kompenzovala struja polarizacije neophodno je imati član u izrazu za izlaz operacionog pojačavača $V_{out}$ koji će praktično da negira član $I_bR_2$. Ovo se postiže dodavanjem otpornika $R_3$ na neinvertujući ulaz operacionog pojačavača. Gde sada kolo poprima drugačiji izgled prikazan na slici \ref{fig:opamp_comp}.}
 
@@ -174,7 +264,7 @@
     \label{virtuelnamasa}
 \end{equation}
 
-{Uvrštanjem izraza za potencijal \ref{virtuelnamasa} u izraz za struju \ref{izrazstruja} i potom uvrtštanjem tih izraza u izraz za I Kirhofov zakon \ref{cvor} dobija se }
+{Uvrštavanjem izraza za potencijal \ref{virtuelnamasa} u izraz za struju \ref{izrazstruja} i potom uvrštavanjem tih izraza u izraz za I Kirhofov zakon \ref{cvor} dobija se }
 
 \begin{equation}
     \frac{V_{in} + I_bR_3}{R_1} = \frac{-I_bR_3 - V_{out}}{R_2} + I_b.
@@ -210,7 +300,7 @@ odnosno
 
 \subsection{Naponski ofset}
 
-{Kao i kod struja polarizacija i naponski ofset predstavlja posledicu nesavršenosti realnog operacionog pojačavača. Nastaje zbog nenulte izlazne impedanse operacionog pojačavača. Kod idealnog operacionog pojačavača modeluje se kao naponski generator koji je povezan na neinvertujući ulaz operacionog pojačavača. Primer naponskog ofseta na invertujućem pojačavaču tad je na slici \ref{fig:opamp_offset}.}
+{Kao i kod struja polarizacija i naponski ofset predstavlja posledicu nesavršenosti realnog operacionog pojačavača. Kod realnog operacionog pojačavača modeluje se kao naponski generator koji je povezan na neinvertujući ulaz pojačavača. Primer naponskog ofseta na invertujućem pojačavaču tad je na slici \ref{fig:opamp_offset}.}
 
 \begin{figure}[ht]
     \centering
@@ -254,7 +344,7 @@ odnosno
     \label{fig:opamp_offset}
 \end{figure}
 
-{Kako se naponski ofset $V_{os}$ modeluje na neinvertujućem ulazu operacionog pojačavača sledi}
+{Kako se naponski ofset $V_{os}$ modeluje na neinvertujućem ulazu (moguće je modelovati ga i na invertujućem ulazu uz promenu znaka) pojačavača sledi}
 
 \begin{equation}
     V^+ = V_{os} = V^-
@@ -289,11 +379,19 @@ odnosno
     \boxed{V_{out} = (1 + \frac{R_2}{R_1})V_{in} + (1 + \frac{R_2}{R_1})V_{os}}.
 \end{equation}
 
-{Može se primetiti da i u ovoj izvedbi operacionog pojačavača dolazi do nepoželjnog izobličenja izlazlnog signala istim članom $(1 + \frac{R_2}{R_1})V_{os}$.}
+{Može se primetiti da i u ovoj izvedbi operacionog pojačavača dolazi do nepoželjnog izgleda izlaznog signala usled postojanja člana $(1 + \frac{R_2}{R_1})V_{os}$.}
 
-{Slična ideja koja je korišćena kod kompenzacije struja polarizacije koristi se i kod kompenzacije naponskog ofseta, odnosno ideja je oduzeti uticaj naponskog ofseta na izlazu operacionog pojačavača. Ovo se postiže dodavanjem kompenzacionog napona na neinvertujući priključak operacionog pojačavača koji će biti istog inteziteta kao i naponski ofset. Prikaz kompenzacije naponskog ofseta invertujućeg pojačavač prikazan je na slici \ref{fig:opamp_offset_comp}.}
+{Kao i kod struja polarizacije i naponski ofset nepoželjno utiče na izgled prenosne karakteristike pojačavača. Uvrštanjem novog izraza za $V_{out}$ u nejednačinu za prenosnu karakteristiku dobija se}
 
-\begin{figure}[ht]
+%\begin{equation}
+%    
+%\end{equation}
+
+{Postoje dve metode koje se najčešće koriste za kompenzaciju naponskog ofseta: unutrašnja i spoljašnja kompenzacija. Unutrašnja kompenzacija vrši se promenom određenih komponenti u samom pojačavaču, dok se kod spoljašnje kompenzacije dodaju elementi u spoljašnjem električnom kolu kako bi se kompenzovao naponski ofset. Ovde će isključivo biti reči o spoljašnjoj kompenzaciji.}
+
+{Slična ideja koja je korišćena kod kompenzacije struja polarizacije koristi se i kod kompenzacije naponskog ofseta, odnosno ideja je oduzeti uticaj naponskog ofseta na izlazu operacionog pojačavača. Ovo se postiže dodavanjem kompenzacionog napona na neinvertujući priključak invertujućeg pojačavača, koji će biti istog inteziteta kao i naponski ofset. Prikaz kompenzacije naponskog ofseta invertujućeg pojačavača prikazan je na slici \ref{fig:opamp_offset_comp}.}
+
+\begin{figure}[H]
     \centering
     \begin{circuitikz}[american]
         \begin{scope}
@@ -336,18 +434,17 @@ odnosno
             ($(OA.-) + (-0.5, 0)$) -- (topV_minus) to [R, l=$R_2$] ++(4,0) -- (OA.out);
         
     \end{circuitikz}
-    \caption{Kompenzacija naponskog ofseta}
+    \caption{Spoljašnja kompenzacija naponskog ofseta kod invertujućeg pojačavača}
     \label{fig:opamp_offset_comp}
 \end{figure}
 
-\pagebreak
 {Kako je neophodno negirati uticaj naponskog ofseta $V_{os}$ mora da važi}
 
 \begin{equation}
     V_{comp} = -V_{os}.
 \end{equation}
 
-{Da bi se izračunao napon $V_{comp}$ neophodno je rešiti kolo strujnog razdelnika, gde se nakon njegovog rešavanja dobija vrednost za napon kompenzacije}
+{Da bi se izračunao napon $V_{comp}$ neophodno je rešiti kolo naponskog razdelnika, gde se nakon njegovog rešavanja dobija vrednost za napon kompenzacije}
 
 \begin{equation}
     \boxed{V_{comp} = \frac{R_3}{R_3 + R_4} V_x}.
@@ -363,172 +460,4 @@ odnosno
 
 \begin{equation}
     \boxed{R_4 = \frac{R_3 \cdot (-V_{cc})}{-V_{os}} - R_3}.
-\end{equation}
-
-\subsection{Karakteristike operacionog pojačavača zavise od frekvencije ulaznog signala}
-
-{Kao što je prethodno spomenuto izraz za izlazni napon operacionog pojačavača u otvorenoj sprezi je }
-
-\begin{equation}
-    V_{out} = A_o \cdot V_{in} = A_o \cdot (V^+ - V^-),
-\end{equation}
-
-{gde se smatra da je vrednost za $A_o$ konstanta ili u slučaju operacionog pojačavača u zatvorenoj sprezi zavisna od otpornika $R_1$ i $R_2$. Ovo nije tačno u praksi već pojačanje zavisi od frekvencije ulaznog signala. Sada se pojačanje modeluje kao funkcija prenosa prvog reda, odnosno}
-
-\begin{equation}
-    A_o(j\omega) = G(j\omega) = \frac{V_{out}(j\omega)}{V^+(j\omega) - V^-(j\omega)} = \frac{A_o}{1 + j\frac{\omega}{\omega_g}}.
-\end{equation}
-
-{Neophodno je razgraničiti pojmove u izrazu, $A_o(j\omega)$ je funkcija prenosa operacionog pojačavača čiji moduo $|A_o(j\omega)|$ određuje pojačanje operacionog pojačavača na određenoj frekveniciji ulaznog signala i čiji argument $arg(A_o(j\omega))$ određuje fazni pomeraj ulaznog signala na određenoj frekvenciji. U funkciji prenosa figuriše i $A_o$ koji predstavlja statičko pojačanje operacionog pojačavača, a $\omega_g$ predstavlja graničnu frekvenciju operacionog pojačavača. Do vrednosti $\omega_g$ se pojačanje smatra konstantnim, nakon $\omega_g$ ono opada.}
-
-{\textit{\textbf{{Primer 1.}}} Pretpostavimo da je $A_o = 1 \,M\frac{V}{V}$, a da je $\omega_g = 20\pi \frac{rad}{s}$. Onda je funkcija prenosa operacionog pojačavača .}
-
-\begin{equation}
-    A_o(j\omega) = \frac{10^6}{1 + j\frac{\omega}{20\pi}}
-\end{equation}
-
-\begin{figure}[ht]
-    \centering
-
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{bode.png}
-        \caption{Bodeov diagram}
-        \label{fig:amplitudska}
-    \end{minipage}
-    \hfill
-    \begin{minipage}{0.48\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{phase.png}
-        \caption{Fazna karakteristika}
-        \label{fig:fazna}
-    \end{minipage}
-
-\end{figure}
-
-{Na graničnoj učestanosti $\omega_g$ dolazi do slabljenja signala u iznosu od 3 dB, što znači da posle te granice operacioni pojačavač više ne ostvaruje željeni izlaz.}
-
-{Na osnovu bodeovog diagrama može se zaključiti da se operacioni pojačavač u ovakvoj izvedbi ponaša kao niskopropusni filtar i da povećanjem frekvencije ulaznog signala njegovo pojačanje tog signala na izlazu opada.}
-
-{Uvodi se i parametar GBP operacionog pojačavača}
-
-\begin{equation}
-    GBP = A_o \cdot \frac{\omega_g}{2\pi} = A_o \cdot f_g \approx const.
-\end{equation}
-
-{Opisuje ponašanje pojačanja operacionog pojačavača pri promeni frekvencije ulaznog signala, odnosno za veće frekvencije pojačanje se smanjuje, ali GBP ostaje konstantan.}
-
-{Kako je do sada obrađivan operacioni pojačavač u otvorenoj sprezi, neophodno je prokomentarisati šta se dešava sa frekvencijskim karakteristikama pojačavača kada se zatvori povratna sprega. Na slici \ref{fig:opamp_freq} je opet prikazano kolo invertujućeg operaciongo pojačavača na osnovu kojeg će biti izveden izraz za njegov izlaz.}
-
-\begin{figure}[ht]
-    \centering
-    \begin{circuitikz}[american]
-        \begin{scope}
-            \ctikzset{tripoles/op amp/width=2.5,   % default 2.5
-                    tripoles/op amp/height=2}    % default 2
-            \node[op amp] (OA) at (0,0) {};
-        \end{scope}
-        \draw
-            (OA.+) -- ++(-2,0) node[ground] {}
-            (OA.-) to [R, l_=$R_1$] ++(-5, 0) to [V, l_=$V_{in}$] ++(0,-1.4) node[ground] {}
-            (OA.out) -- ++(1,0) node[right]{$V_{out}$};
-
-        \draw
-            (OA.up) -- ++(0,1) node[above]{$+V_{cc}$};
-
-        \draw
-            (OA.down) -- ++(0,-1) node[below]{$-V_{cc}$};
-        
-        \coordinate (topV_minus) at ($(OA.-) + (-0.5, 2.5)$);
-        \coordinate (startarrow) at ($(OA.-) + (-1.5, 0)$);
-
-        \draw[->]
-            (startarrow) -- ++(1,0) node[midway, above] {$I_1$};
-
-        \draw[->]
-            (topV_minus) -- ++(1,0) node[midway, above] {$I_2$};
-
-        \node[circ] at ($(OA.-) + (-0.5,0)$) {};
-        \node[below] at ($(OA.-) + (-0.5,0)$) {$V^-$};
-        \node[circ] at ($(OA.+) + (-0.5,0)$) {};
-        \node[below] at ($(OA.+) + (-0.5,0)$) {$V^+$};
-        \node[circ] at (OA.out) {};
-
-        \draw
-            ($(OA.-) + (-0.5, 0)$) -- (topV_minus) to [R, l=$R_2$] ++(4,0) -- (OA.out);
-        
-    \end{circuitikz}
-    \caption{Invertujući operacioni pojačavač}
-    \label{fig:opamp_freq}
-\end{figure}
-
-\pagebreak
-
-{Kako je funkcija prenosa operacionog pojačavača data sa izrazom $G(j\omega) = \frac{V_{out}(j\omega)}{V^+(j\omega) - V^-(j\omega)} = \frac{A_o}{1 + j\frac{\omega}{\omega_g}}$, neophodno je odrediti izraz za ulaz operacionog pojačavača, odnosno odrediti $V^+$ i $V^-$.}
-
-{Kako je $V^+$ povezan na masu sledi}
-
-\begin{equation}
-    V^+ = 0.
-\end{equation}
-
-{Izraz za $V^-$ dobija se izjednačavanjem struja u kolu i sređivanjem izraza}
-
-\begin{equation}
-    \frac{V_{in} - V^-}{R_1} = \frac{V^- - V_{out}}{R_2}.
-\end{equation}
-
-\begin{equation}
-    V^- = \frac{R_1V_{out} + R_2V_{in}}{R_1 + R_2}.
-\end{equation}
-
-{Gde je onda izraz za izlazni napon sledeći}
-
-\begin{equation}
-    V_{out} = -\frac{A_o}{1 + j\frac{\omega}{\omega_g}} \frac{R_1V_{out} + R_2V_{in}}{R_1 + R_2}.
-\end{equation}
-
-{Množenjem obe strane jednačine sa $(1 + j\frac{\omega}{\omega_g})(R_1 + R_2)$ i daljim sređivanjem dobija se odnos ulaza i izlaza invertujućeg operacionog pojačavača}
-
-\begin{equation}
-    \frac{V_{out}}{V_{in}} = \frac{-A_oR_2}{(R_1 + R_2)(1 + j\frac{\omega}{\omega_g}) + A_oR_1},
-\end{equation}
-
-\begin{equation}
-    \frac{V_{out}}{V_{in}} = \frac{-A_oR_2}{R_1 + R_2 + A_oR_1 + j(R_1 + R_2)\frac{\omega}{\omega_g}}.
-\end{equation}
-
-{Izvlačenjem $R_1 + R_2 + A_oR_1$ iz imenioca dobija se sledeći izraz}
-
-\begin{equation}
-    \frac{V_{out}}{V_{in}} = \frac{\frac{-A_oR_2}{R_1 + R_2 + A_oR_1}}{1 + j(\frac{R_1 + R_2}{R_1 + R_2 + A_oR_1})\frac{\omega}{\omega_g}}.
-\end{equation}
-
-{Gde je sada moguće uvesti nove izraze za pojačanje i graničnu učestanost}
-
-\begin{equation}
-    \boxed{A_{inv} = \frac{-A_oR_2}{R_1 + R_2 + A_oR_1}}
-    \quad i \quad
-    \boxed{\omega_{inv} = \frac{R_1 + R_2 + A_oR_1}{R_1 + R_2} \omega_g}.
-\end{equation}
-
-{Finalni izraz za funkciju prenosa invertujućeg operacionog pojačavača je}
-
-\begin{equation}
-    \frac{V_{out}}{V_{in}} = \frac{A_{inv}}{1 + j\frac{\omega}{\omega_{inv}}}.
-\end{equation}
-
-{Izraz za neinvertujući operacioni pojačavač je sličan te neće biti izvođen već samo dat u finalnoj formi}
-
-\begin{equation}
-    \boxed{A_{noninv}
-    =
-    \frac{A_o(R_1 + R_2)}
-    {R_1 + R_2 + A_oR_1}}
-    \quad i \quad
-    \boxed{\omega_{noninv}
-    =
-    \frac{R_1 + R_2 + A_oR_1}
-    {R_1 + R_2}
-    \omega_g}.
 \end{equation}

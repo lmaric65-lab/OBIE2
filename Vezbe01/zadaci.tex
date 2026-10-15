@@ -39,7 +39,74 @@
 \section{Zadaci za vežbu}
 
 \begin{zadatak}
-    Odrediti vrednost izlaznog napona $V_{out}$ za kolo sa slike \ref{fig:zad3},
+    Za naponski razdelnik sa slike \ref{fig:zad3} poznato je da je
+    $V_{\mathrm{in}} = 12\,\mathrm{V}$. Potrebno je odabrati otpornosti
+    tako da izlazni napon bude $V_{\mathrm{out}} = 3\,\mathrm{V}$,
+    a struja kroz neopterećeni razdelnik
+    $I_{\mathrm{in}} = 0{,}5\,\mathrm{mA}$.
+
+    \begin{enumerate}
+        \item[a)] Odrediti odnos otpornosti $R_1/R_2$.
+        \item[b)] Odrediti vrednosti otpornosti $R_1$ i $R_2$.
+        \item[c)] Odrediti izlazni napon $V_{out}$ ako otpornici
+        $R_1$ i $R_2$ zamene mesta.
+    \end{enumerate}
+\end{zadatak}
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[american]
+        \draw
+            (0,0) node[ground] {}
+            to[V, invert,l=$V_{in}$] (0,2)
+            to[R, l=$R_1$, my voltage] (5,2)
+            to[R, l=$R_2$, v=$V_{out}$, my voltage] (5,0)
+            (5,0) node[ground] {};
+
+    \end{circuitikz}
+    \caption{Kolo za zadatak 3}
+    \label{fig:zad3}
+\end{figure}
+
+\begin{zadatak}
+    Na izlaznim priključcima $a$ i $b$ nepoznatog linearnog
+    kola izvršena su dva merenja idealnim voltmetrom.
+    Svi naponi posmatraju se od priključka $a$ prema
+    priključku $b$, odnosno $V_{ab} = V_a - V_b$.
+
+    Kada na izlaz nije priključeno opterećenje, izmeren je
+    napon praznog hoda:
+    \[
+        V_{\mathrm{oc}} = 6\,\mathrm{V}.
+    \]
+    Nakon priključivanja otpornika
+    $R_L = 3\,k\Omega$ između priključaka $a$ i $b$,
+    izmeren je napon na opterećenju:
+    \[
+        V_L = 4\,\mathrm{V}.
+    \]
+
+    Na osnovu rezultata merenja:
+    \begin{enumerate}
+        \item[a)] Odrediti parametre Tevenenovog ekvivalenta
+        $E_{\mathrm{th}}$ i $R_{\mathrm{th}}$.
+
+        \item[b)] Odrediti parametre Nortonovog ekvivalenta
+        $I_N$ i $R_N$.
+
+        \item[c)] Odrediti napon i struju opterećenja
+        kada se postojeći otpornik zameni otpornikom
+        otpornosti $1{,}5\,k\Omega$.
+        Pozitivan smer struje kroz opterećenje usvojiti
+        od priključka $a$ ka priključku $b$.
+    \end{enumerate}
+\end{zadatak}
+
+\pagebreak
+\section{Zadatak za domaći}
+
+\begin{zadatak}
+    Odrediti vrednost izlaznog napona $V_{out}$ za kolo sa slike \ref{fig:zadd},
     ako su:
     \[
         V_1 = 12\,V\,,
@@ -58,6 +125,6 @@
     \draw (5,3) to[R, l^=$R_2$] (5,0) node[ground]{};
     \draw (0,3) to[V, invert, l=$V_2$] (0,6) -- (5,6) to[R, l=$R_5$] (5,3);
 \end{circuitikz}
-\caption{Kolo za zadatak 3}
-\label{fig:zad3}
+\caption{Kolo za domaći}
+\label{fig:zadd}
 \end{figure}

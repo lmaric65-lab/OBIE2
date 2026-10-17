@@ -35,7 +35,7 @@ $V_{out}$ daje pojačanu razliku potencijala na ulazima $V^{+}$ i $V^{-}$.
 Ovo je dato sledećim izrazom}
 
 \begin{equation}
-    V_{out} = A_{o} \cdot (V^{+} - V^{-}).
+    V_{out} = A_{o} \cdot (V^{+} - V^{-}) = A_o \cdot V_{in}.
     \label{eq:basic_eq}
 \end{equation}
 
@@ -43,7 +43,7 @@ Ovo je dato sledećim izrazom}
 u otvorenoj sprezi. Njegova vrednost zavisi od karakteristika
 i specifikacije konkretnog operacionog pojačavača, obično je reda veličine $10^6$ do $10^8$. Vrednosti na izlazu operacionog pojačavača su ograničene napajanjem, tako da se uvek kreću između $+V_{cc}$ i $-V_{cc}$. Kako se izlazne vrednosti operacionog pojačavača kreću u intervalu od $-V_{cc}$ do $+V_{cc}$, uvodi se pojam prenosne karakteristike koja predstavlja zavisnost izlaznog napona od ulaznog.}
 
-{Operacioni pojačavač ima dva režima rada: linearni režim rada i zasićenje. Kada se operacioni pojačavač nalazi u zasićenju njegov izlaz dolazi u stanje u kom za nove promene ulaznog napona $V_{in}$, ne dolazi do promena izlaznog napona $V_{out}$. U linearnom režimu rada operacioni pojačavač pojačava ulazni napon prema obrascu datom u izrazu \ref{eq:basic_eq}}
+{Operacioni pojačavač ima dva režima rada: linearni režim rada i zasićenje. Kada se operacioni pojačavač nalazi u zasićenju njegov izlaz dolazi u stanje u kom za nove promene ulaznog napona $V_{in}$, ne dolazi do promena izlaznog napona $V_{out}$. U linearnom režimu rada operacioni pojačavač pojačava ulazni napon prema izrazu \ref{eq:basic_eq}}
 
 \subsection{Karakteristike idealnog operacionog pojačavača}
 
@@ -64,7 +64,7 @@ ima sledeće karakteristike:}
     ima beskonačno veliko pojačanje, što znači da će i za najmanju razliku potencijala 
     na ulazu imati beskonačno veliki izlazni napon.
     \item {$Z_{in} = \infty$} - operacioni pojačavač ima beskonačno veliku ulaznu impedansu, što znači da ne teče struja kroz ulazne priključke operacionog pojačavača.
-    \item {$Z_{out} = 0$} - operacioni pojačavač ima nultu izlaznu impedansu, što znači da se ponaša kao idealni naponski izvor (ne opterećuje kolo na bilo koji način, odnosno ne dolazi do pada napona na izlazu kola ($V_{out} = V_{gen}$)).
+    \item {$Z_{out} = 0$} - operacioni pojačavač ima nultu izlaznu impedansu, što znači da se ponaša kao idealni naponski izvor ($V_{out} = V_{gen}$).
     \item {Karakteristike rada operacionog pojačavača ne zavise od frekvencije ulaznog signala}
 \end{enumerate}
 
@@ -110,4 +110,82 @@ ima sledeće karakteristike:}
 
 {Kao što se može uočiti sa grafika i iz izraza \ref{eq:out_ideal}, za svaku vrednost ulaznog napona različitu od nule, izlazni napon operacionog pojačavača dostiže jednu od granica napajanja, u zavisnosti od znaka ulaznog signala. To znači da se operacioni pojačavač u otvorenoj sprezi praktično uvek nalazi u stanju saturacije, zbog čega nije pogodan za linearno pojačavanje signala. Međutim, ovakvo ponašanje omogućava njegovu primenu za poređenje naponskih nivoa, odnosno detekciju da li je ulazni napon veći ili manji od određene referentne vrednosti (komparator).}
 
-{Izraz \ref{eq:out_ideal} nije u potpunosti tačan, već predstavlja idealizovani model, u realnosti čak i kod izvedbe pojačavača u otvorenoj sprezi postoji uska oblast u kojoj on radi u linearnom režimu, ali se radi jednostavnosti ona u ovom slučaju ne uzima u obzir.}
+{Kao što je prethodno spomenuto ovakva izvedba operacionog pojačavača predstavlja samo idealizovani matematički model koji zapravo ne postoji u praksi. U realnosti operacioni pojačavač nema beskonačno pojačanje, odnosno $A_o \ne \infty$. O ostalim realnim karakteristikama pojačavača biće više reči u narednom delu nastave. Kao posledicu ovoga dobija se određeni nagib na prenosnoj karakteristici, odnosno pojavljuje se linearna zavisnost ulaza i izlaza prema formuli \ref{eq:basic_eq}.}
+
+{Kako izlazni napon $V_{out}$ mora da bude u granicama od $-V_{cc}$ do $+V_{cc}$, odnosno}
+
+\begin{equation}
+    -V_{cc} \le V_{out} \le +V_{cc},
+\end{equation}
+
+{tada se mogu dobiti i granice vrednosti u kojima mora da bude ulazni napon kako bi se on pojavio na izlazu, bez da operacioni pojačavač uđe u stanje saturacije, odnosno}
+
+\begin{equation}
+    -\frac{V_{cc}}{A_o} \le V_{in} \le +\frac{V_{cc}}{A_o},
+\end{equation}
+
+{nakon što se $V_{out}$ zameni sa \ref{eq:basic_eq}.}
+
+{Naime, sada i prenosna karakteristika pojačavača postaje drugačija, odnosno dobija nagib. Ovo je predstavljeno na grafiku \ref{fig:opamp_real_nofb_transfer}.}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        x=1.35cm,
+        y=1.35cm,
+        line cap=round,
+        line join=round,
+        font=\small
+    ]
+
+        % Parametri grafika
+        \def\xsat{0.18}
+        \def\ysat{0.85}
+
+        % Koordinatne ose
+        \draw[gray!50, thin, -stealth]
+            (-4.3,0) -- (4.3,0)
+            node[right, black] {$V_{\mathrm{in}}$};
+
+        \draw[gray!50, thin, -stealth]
+            (0,-1.45) -- (0,1.45)
+            node[above, black] {$V_{\mathrm{out}}$};
+
+        % Prenosna karakteristika
+        \draw[blue!65, line width=1.15pt]
+            (-4,-\ysat) --
+            (-\xsat,-\ysat) --
+            (\xsat,\ysat) --
+            (4,\ysat);
+
+        % Granice linearne oblasti
+        \draw[blue!35, thin, dashed]
+            (-\xsat,-\ysat) -- (-\xsat,0);
+
+        \draw[blue!35, thin, dashed]
+            (\xsat,0) -- (\xsat,\ysat);
+
+        % Oznake napona saturacije
+        \node[anchor=south] at (1.8,\ysat+0.08)
+            {$+V_{CC}$};
+
+        \node[anchor=north] at (-1.8,-\ysat-0.08)
+            {$-V_{CC}$};
+
+        % Oznake granica linearne oblasti
+        \node[anchor=south east] at
+            (-\xsat-0.10,0.12)
+            {$-\frac{V_{CC}}{A_o}$};
+
+        \node[anchor=north west] at
+            (\xsat+0.10,-0.12)
+            {$+\frac{V_{CC}}{A_o}$};
+
+    \end{tikzpicture}
+
+    \caption{Prenosna karakteristika
+    operacionog pojačavača u zatvorenoj sprezi.}
+    \label{fig:opamp_real_nofb_transfer}
+\end{figure}
+
+{Sada grafik poprima određenu linearnu zavisnost između ulaza i izlaza, doduše ona je mnogo strmija nego što je to predstavljeno na grafiku i to predstavlja jedan od problema koji i dalje postoji kod realnog pojačavača.}

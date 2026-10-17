@@ -7,8 +7,7 @@
     Operacioni pojačavač u otvorenoj sprezi ima sledeće karakteristike: $A_o = 1\,M\,\frac{V}{V}$ \text{i} $\pm V_{cc} = \pm 10V$.Odrediti:
 
     \begin{enumerate}
-        \item[a)] Vrednost izlaza operacionog pojačavača za proizvoljno velik ulazni signal (npr. $1\,V$),
-        
+        \item[a)] Vrednost izlaza operacionog pojačavača za proizvoljno velik ulazni signal (npr. $1\,V \sin(20\pi\,t)$),
         \item[b)] Prikazati prenosnu karakteristiku datog operacionog pojačavača 
         \item[c)] Odrediti adekvatan ulazni signal koji će se u potpunosti propustiti kroz operacioni pojačavač.
     \end{enumerate}
@@ -96,25 +95,57 @@
 \end{zadatak}
 
 \begin{zadatak}
-    Odrediti izraz za izlaz iz sabirača sa slike \ref{fig:opamp_zad2}.
+    Na slici \ref{fig:opamp_zad2} je prikazano kolo neinvertujućeg sabirača sa dva ulazna
+    napona, $V_1$ i $V_2$.
 
-    \begin{figure}[ht]
+    Vrednosti otpornosti su:
+    \[
+        R_a = 10\,k\Omega, \qquad
+        R_b = 20\,k\Omega,
+    \]
+    \[
+        R_1 = 10\,k\Omega, \qquad
+        R_2 = 20\,k\Omega,
+    \]
+    \[
+        V_1 = 1.5\,V, \qquad
+        V_2 = 2\,V.
+    \]
+
+    \begin{enumerate}
+        \item[a)] Odrediti izraz
+        za napon na neinvertujućem ulazu $V^+$.
+
+        \item[b)] Izvesti opšti izraz za izlazni napon
+        $V_{\mathrm{out}}$ i uvrsiti zadate vrednosti.
+
+        \item[c)] Odrediti koliko se menja izlazni napon pri promeni
+        svakog od ulaznih napona za $\Delta V$, uz nepromenjen drugi
+        ulazni napon. Objasniti kako odnos otpornosti $R_a$ i $R_b$
+        utiče na doprinos pojedinačnih ulaza izlaznom naponu.
+    \end{enumerate}
+
+    \textbf{Dodatno:}
+    Nacrtati invertujući sabirač u kojem se naponi $V_1$ i $V_2$
+    dovode na invertujući ulaz preko istih otpornika $R_a$ i $R_b$.
+
+    \begin{figure}[H]
     \centering
     \begin{circuitikz}[american]
         \begin{scope}
-            \ctikzset{tripoles/op amp/width=2.5,   % default 2.5
-                    tripoles/op amp/height=2}    % default 2
+            \ctikzset{tripoles/op amp/width=2.5,
+                    tripoles/op amp/height=2}
             \node[op amp] (OA) at (0,0) {};
         \end{scope}
 
         \coordinate (crossroad) at ($(OA.+) + (-2,-0.5)$);
 
         \draw
-            (OA.+) -- ++(-2,0) -- ++(0, -0.5) to [R, l=$R$] ++(-2, 0) to [V, l=$V_1$] ++ (-1,0) node[ground] {}
+            (OA.+) -- ++(-2,0) -- ++(0, -0.5) to [R, l=$R_a$] ++(-2, 0) to [V, l=$V_1$] ++ (-1,0) node[ground] {}
             (OA.-) to [R, l_=$R_1$] ++(-4, 0) node[ground] {}
             (OA.out) -- ++(1,0) node[right]{$V_{out}$};
         \draw
-            (crossroad) -- ++(0,-2) to [R, l=$R$] ++(-2, 0) to [V, l=$V_2$] ++ (-1,0) node[ground] {};
+            (crossroad) -- ++(0,-2) to [R, l=$R_b$] ++(-2, 0) to [V, l=$V_2$] ++ (-1,0) node[ground] {};
         
         \draw
             (OA.up) -- ++(0,1) node[above]{$+V_{cc}$};
@@ -145,5 +176,71 @@
     \caption{Sabirač}
     \label{fig:opamp_zad2}
     \end{figure}
-    Razmisliti: Kako bi izgledao izlaz operacionog pojačavača za sličnu konfiguraciju na invertujućem ulazu?
+\end{zadatak}
+
+\newpage
+\section{Zadatak za domaći}
+
+\begin{zadatak}
+
+    Dva operaciona pojačavača povezana su kaskadno, tako da je
+    izlaz prvog stepena povezan na ulaz drugog stepena.
+
+    \begin{itemize}
+        \item \textbf{Prvi stepen} je neinvertujući pojačavač,
+        sa otpornikom $R_1 = 10\,k\Omega$ između
+        invertujućeg ulaza i mase i otpornikom
+        $R_2 = 40\,k\Omega$ u povratnoj sprezi.
+
+        \item \textbf{Drugi stepen} je invertujući pojačavač,
+        sa ulaznim otpornikom $R_3 = 10\,k\Omega$
+        i otpornikom $R_4 = 20\,k\Omega$ u povratnoj
+        sprezi. Neinvertujući ulaz drugog stepena povezan
+        je na masu.
+    \end{itemize}
+
+    Oba operaciona pojačavača napajaju se naponima
+    $\pm V_{cc} = \pm 10\,\mathrm{V}$.
+    Smatrati ih idealnim.
+
+    Izlazni napon prvog stepena označiti sa
+    $V_{\mathrm{out1}}$, a izlazni napon drugog stepena
+    sa $V_{\mathrm{out}}$.
+
+    Na ulaz prvog stepena dovodi se signal:
+    \[
+        V_{\mathrm{in}}(t)
+        = 0{,}5\sin(100\pi t)\,\mathrm{V}.
+    \]
+
+    \noindent\textbf{Potrebno je:}
+
+    \begin{enumerate}
+        \setlength{\itemsep}{0.5em}
+
+        \item[a)] Nacrtati električno kolo dvostepenog pojačavača.
+
+        \item[b)] Odrediti pojačanje svakog stepena i ukupno
+        pojačanje kola u linearnom režimu rada.
+
+        \item[c)] Odrediti izraze za izlazne napone
+        $V_{\mathrm{out1}}(t)$ i $V_{\mathrm{out}}(t)$
+        za zadati ulazni signal.
+
+        \item[d)] Odrediti najveću amplitudu ulaznog sinusoidalnog
+        signala pri kojoj ne dolazi do odsecanja izlaznih signala.
+        Obrazložiti koji stepen prvi ulazi u zasićenje pri
+        povećavanju amplitude ulaznog signala.
+
+        \item[e)] Ponoviti analizu za ulazni signal:
+        \[
+            V_{\mathrm{in}}(t)
+            = 1{,}5\sin(100\pi t)\,\mathrm{V},
+        \]
+        koja se amplituda signala dobija na izlazu iz prvog, a koja na izlazu iz drugog stepena pojačavača?
+
+    \end{enumerate}
+
+    \noindent\textbf{NAPOMENA:}
+    Pri simulaciji koristiti model UniversalOpAmp2.
 \end{zadatak}

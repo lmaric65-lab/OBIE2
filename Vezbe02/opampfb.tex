@@ -4,7 +4,7 @@
 
 {Problem kod izvedbe operacionog pojačavača u otvorenoj sprezi je u tome što se pojačavač veoma lako može dovesti u stanje saturacije. Zbog veoma velikog pojačanja $A_{o}$, čak i izuzetno male vrednosti diferencijalnog napona na ulazu mogu dovesti do maksimalne vrednosti izlaznog napona. Zbog toga je operacioni pojačavač u otvorenoj sprezi praktično neupotrebljiv za potrebe linearnog pojačanja signala. Na primer, ako bi diferencijalni napon na ulazu iznosio $1\mu\mathrm{V}$, na izlazu bi se dobila vrednost od $100\mathrm{V}$. Međutim, isti izlazni napon bi se dobio i za ulazne napone od $10\mu\mathrm{V}$, $100\mu\mathrm{V}$, $1\mathrm{mV}$ itd. Na taj način praktično nije moguće razlikovati različite vrednosti ulaznog signala, jer sve one rezultuju istom vrednošću izlaznog signala, odnosno ne dobijamo linearno mapiranje ulaznog signala na izlazni signal.}
 
-{Zbog toga se operacioni pojačavači u praksi koriste u zatvorenoj sprezi, pri čemu se deo izlaznog signala vraća na ulaz pojačavača. Na taj način se postiže proširenje prenosne karakteristike pojačavača, odnosno omogućava se da se izlazni signal $V_{out}$ menja u skladu sa ulaznim signalom $V_{in}$ sa mnogo većim stepenom slobode, pri čemu se izbegava saturacija. Prenosna karakteristika ovoga je prikazana na grafiku \ref{fig:opamp_real_transfer}. Takođe se uvodi nova oznaka za pojačanje u zatvorenoj sprezi $A$.}
+{Zbog toga se operacioni pojačavači u praksi koriste u zatvorenoj sprezi, pri čemu se deo izlaznog signala vraća na ulaz pojačavača. Na taj način se postiže proširenje prenosne karakteristike pojačavača, odnosno omogućava se da se izlazni signal $V_{out}$ menja u skladu sa ulaznim signalom $V_{in}$ sa mnogo većim stepenom slobode, pri čemu se izbegava saturacija. Prenosna karakteristika takvog kola je prikazana na grafiku \ref{fig:opamp_real_transfer}. Takođe se uvodi nova oznaka za pojačanje u zatvorenoj sprezi $A$.}
 
 \begin{figure}[H]
     \centering
@@ -115,7 +115,7 @@
     \label{fig:opamp_noninverting}
 \end{figure}
 
-{U konfiguraciji neinvertujećeg pojačavača ulazni signal $V_{in}$ povezan je na neinvertujući ulaz $V^+$ operacionog pojačavača, a invertujući ulaz se preko otpornika $R_1$ dovodi na masu. Pod pretpostavkom da se radi o idealnom operacionom pojačavaču važi da je}
+{U konfiguraciji neinvertujućeg pojačavača ulazni signal $V_{in}$ povezan je na neinvertujući ulaz $V^+$ operacionog pojačavača, a invertujući ulaz se preko otpornika $R_1$ dovodi na masu. Takođe važi da je}
 
 \begin{equation}
     V^- = V^+ = V_{in}.
@@ -193,7 +193,7 @@
     \label{fig:opamp_inverting}
 \end{figure}
 
-{U ovoj konfiguraciji operacionog pojačavača se neinvertujući ulaz $V^+$ povezuje na masu, a na invertujući ulaz je povezan ulazni signal $V_{in}$ preko otpornika $R_1$. Pod pretpostavkom da se radi o idealnom operacionom pojačavaču može da se zaključi da su tačke $V^-$ i $V^+$ na istom potencijalu, odnosno da je $V^-$ povezan na virtuelnu masu preko $V^+$ i važi}
+{U ovoj konfiguraciji operacionog pojačavača se neinvertujući ulaz $V^+$ povezuje na masu, a na invertujući ulaz je povezan ulazni signal $V_{in}$ preko otpornika $R_1$. Pod pretpostavkom da se radi o idealnom operacionom pojačavaču može da se zaključi da su tačke $V^-$ i $V^+$ na istom potencijalu, odnosno da se $V^+$ i $V^-$ nalaza na virtuelnoj masi (imaju isti potencijal) i važi}
 
 \begin{equation}
     V^- = V^+ = 0
@@ -211,16 +211,16 @@
     I = \frac{V_{in} - 0}{R_1} = \frac{0 - V_{out}}{R_2}.
 \end{equation}
 
-{I odavde može da se zaključi da je izraz koji određuje zavisnost izlaza od ulaza jednak}
+{Izjedanačavenjem izraza za struju dobija se}
 
 \begin{equation}
     V_{out} = -\frac{R_2}{R_1} \cdot V_{in},
 \end{equation}
 
-{gde izraz $-\frac{R_2}{R_1}$ zapravo pojačanje, odnosno}
+{gde izraz $-\frac{R_2}{R_1}$ predstavlja pojačanje, odnosno}
 
 \begin{equation}
     A_{inv} = -\frac{R_2}{R_1}.
 \end{equation}
 
-{Treba primetiti da se u ovoj izvedbi operacionog pojačavača ulazni signal invertuje i u zavisnosti od vrednosti otpornika $R_1$ i $R_2$, signal takođe može biti pojačan, oslabljen ili samo biti invertovan.}
+{Treba primetiti da se u ovoj izvedbi operacionog pojačavača ulazni signal invertuje i u zavisnosti od vrednosti otpornika $R_1$ i $R_2$, signal se invertuje, ali njegova amplituda može da se smanji, poveća ili da ostane ista.}

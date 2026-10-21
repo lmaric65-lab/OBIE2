@@ -15,7 +15,7 @@
 {Na osnovu slike može se zaključiti da realni operacioni pojačavač ima sledeće karakteristike:}
 
 \begin{enumerate}
-    \item $A_o$ je veoma veliko, ali nije beskonačno, što
+    \item $A$ je veoma veliko, ali nije beskonačno, što
     dovodi do odstupanja stvarnog pojačanja od idealnog.
 
     \item $Z_{in}$ nije beskonačno, već ima konačnu vrednost.
@@ -40,13 +40,13 @@
     frekvencijski opseg rada pojačavača.
 \end{enumerate}
 
-{Svaka od ovih karakteristika biće detaljno opisana u nastavku teksta.}
+{Svaka od ovih karakteristika biće detaljno opisana u nastavku teksta, kao i u narednim terminima vežbi.}
 
 \subsection{Struja polarizacije}
 
-{Struje polarizacije predstavljaju posledicu nesavršenosti realnog operacionog pojačavača. Za razliku od idealnog operacionog pojačavača, kod koga kroz ulazne priključke ne teče struja, kod realnog operacionog pojačavača postoje male ulazne struje koje se nazivaju struje polarizacije. Ove struje mogu izazvati dodatne padove napona na otpornicima u kolu i time dovesti do odstupanja izlaznog napona od njegove idealne vrednosti.}
+{Struje polarizacije predstavljaju posledicu nesavršenosti realnog operacionog pojačavača. Za razliku od idealnog operacionog pojačavača, kod koga kroz ulazne priključke ne teče struja, kod realnog pojačavača postoje male ulazne struje koje se nazivaju struje polarizacije, one nastaju zbog toga što ulazna impedansa pojačavača nije beskonačna i zbog nesavršenosti u izradi samog pojačavača. Ove struje mogu izazvati dodatne padove napona na otpornicima u kolu i time dovesti do odstupanja izlaznog napona od njegove idealne vrednosti. Obično su u opsegu od $1\,pA$ do $100\,\mu A$.}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \begin{circuitikz}[american]
         \begin{scope}
@@ -92,7 +92,19 @@
     \label{fig:opamp_polarizacije}
 \end{figure}
 
-{Sa slike \ref{fig:opamp_polarizacije} može da se zaključi da se sada uvodi još jedna struja, struja polarizacije $I_b$. Pretpostavljeno je da je ova struja jednaka na oba ulaza, odnosno da važi $I_b = I_{b+} = I_{b-}$ , iako ovo ne mora uvek biti tačno. Sada se iz tačke $V^-$ može napisati I Kirhofov zakon}
+{Sa slike \ref{fig:opamp_polarizacije} može da se zaključi da se sada uvodi još jedna struja, struja polarizacije $I_b$. Pretpostavljeno je da je ova struja jednaka na oba ulaza, odnosno da važi $I_b = I_{N} = I_{P}$, ovo u opštem slučaju nije tačno već se izraz za struje polarizacije dobija kao srednja vrednost struja $I_N$ i $I_P$, odnosno}
+
+\begin{equation}
+    I_b = \frac{I_N + I_P}{2}.
+\end{equation}
+
+{Bitan parametar je takođe i strujni ofset $I_{os}$, koji predstavlja razliku struja polarizacije na oba priključka pojačavača i računa se kao}
+
+\begin{equation}
+    I_{os} = |I_N - I_P|.
+\end{equation}
+
+{Na osnovu kola iz slike \ref{fig:opamp_polarizacije} se iz tačke $V^-$ može napisati izraz za I Kirhofov zakon}
 
 \begin{equation}
     I_1 = I_2 + I_b.
@@ -129,7 +141,7 @@
 {Bitno je napomenuti kakav uticaj struja polarizacije ima na samu prenosnu karakteristiku pojačavača. Kako se dobija novi izraz za $V_{out}$, prenosna karakteristika poprima sledeći oblik}
 
 \begin{equation}
-    \frac{-V_{cc} - I_bR_2}{A_o} \le V_{in} \le \frac{V_{cc} - I_bR_2}{A_o}.
+    \frac{-V_{cc} - I_bR_2}{A} \le V_{in} \le \frac{V_{cc} - I_bR_2}{A}.
 \end{equation}
 
 \begin{figure}[H]
@@ -197,7 +209,7 @@
 
 {Kako bi se kompenzovala struja polarizacije neophodno je imati član u izrazu za izlaz operacionog pojačavača $V_{out}$ koji će praktično da negira član $I_bR_2$. Ovo se postiže dodavanjem otpornika $R_3$ na neinvertujući ulaz operacionog pojačavača. Gde sada kolo poprima drugačiji izgled prikazan na slici \ref{fig:opamp_comp}.}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \begin{circuitikz}[american]
         \begin{scope}
@@ -300,9 +312,9 @@ odnosno
 
 \subsection{Naponski ofset}
 
-{Kao i kod struja polarizacija i naponski ofset predstavlja posledicu nesavršenosti realnog operacionog pojačavača. Kod realnog operacionog pojačavača modeluje se kao naponski generator koji je povezan na neinvertujući ulaz pojačavača. Primer naponskog ofseta na invertujućem pojačavaču tad je na slici \ref{fig:opamp_offset}.}
+{Kao i kod struja polarizacija i naponski ofset predstavlja posledicu nesavršenosti realnog operacionog pojačavača. Kod realnog operacionog pojačavača modeluje se kao naponski generator koji je povezan na neinvertujući ulaz pojačavača i obično ima vrednosti u opsegu od $10\,nV$ do $10\,mV$. Primer naponskog ofseta na invertujućem pojačavaču tad je na slici \ref{fig:opamp_offset}.}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \begin{circuitikz}[american]
         \begin{scope}
@@ -371,7 +383,7 @@ odnosno
     \label{vout}
 \end{equation}
 
-{Iz jednačine za izlazni napon \ref{vout} se zapravo mogu videti posledice naponskog ofseta na izlaz kola, gde se izlazu dodaje član $(1 + \frac{R_2}{R_1})V_{os}$ koji nepovoljno utiče na izlaz operacionog pojačavača i dovodi do nepredviđenih i nepoželjih izlaza.}
+{Iz jednačine za $V_{out}$ \ref{vout} se zapravo mogu videti posledice naponskog ofseta na kolo, gde se izlazu dodaje član $(1 + \frac{R_2}{R_1})V_{os}$ koji nepovoljno utiče na izlaz operacionog pojačavača i dovodi do nepredviđenih i nepoželjih vrednosti na izlazu.}
 
 {Izvođenje za neinvertujući operacioni pojačavač je slično, te neće biti obrađivano već će samo biti dato u svojoj finalnoj formi}
 
@@ -383,13 +395,80 @@ odnosno
 
 {Kao i kod struja polarizacije i naponski ofset nepoželjno utiče na izgled prenosne karakteristike pojačavača. Uvrštanjem novog izraza za $V_{out}$ u nejednačinu za prenosnu karakteristiku dobija se}
 
-%\begin{equation}
-%    
-%\end{equation}
+\begin{equation}
+    \frac{-V_{cc} - (1+\frac{R_2}{R_1})V_{os}}{A} \le V_{in} \le \frac{V_{cc} - (1+\frac{R_2}{R_1})V_{os}}{A},
+\end{equation}
+
+{i prenosna karakteristika onda poprima sličan oblik kao i kod struja polarizacije, ovo je predstavljeno na grafiku \ref{fig:opamp_ofset_transfer}.}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[
+        x=1.35cm,
+        y=1.35cm,
+        line cap=round,
+        line join=round,
+        font=\small
+    ]
+
+        % Parametri grafika
+        \def\xsat{0.65}
+        \def\ysat{0.85}
+        \def\xoffset{0.30}
+
+        % Koordinatne ose
+        \draw[gray!50, thin, -stealth]
+            (-4.3,0) -- (4.3,0)
+            node[right, black] {$V_{\mathrm{in}}$};
+
+        \draw[gray!50, thin, -stealth]
+            (0,-1.45) -- (0,1.45)
+            node[above, black] {$V_{\mathrm{out}}$};
+
+        % Prenosna karakteristika bez struja polarizacije
+        \draw[gray!65, dashed, line width=1pt]
+            (-4,-\ysat) --
+            (-\xsat,-\ysat) --
+            (\xsat,\ysat) --
+            (4,\ysat);
+
+        % Prenosna karakteristika sa strujama polarizacije
+        \draw[blue!65, line width=1.15pt]
+            (-4,-\ysat) --
+            ({-\xsat-\xoffset},-\ysat) --
+            ({\xsat-\xoffset},\ysat) --
+            (4,\ysat);
+
+        % Granice linearne oblasti
+        \draw[blue!35, thin, dashed]
+            ({-\xsat-\xoffset},-\ysat) --
+            ({-\xsat-\xoffset},0);
+
+        \draw[blue!35, thin, dashed]
+            ({\xsat-\xoffset},0) --
+            ({\xsat-\xoffset},\ysat);
+
+        % Oznake napona saturacije
+        \node[anchor=east] at (-0.15,\ysat)
+            {$+V_{CC}$};
+
+        \node[anchor=west] at (0.15,-\ysat)
+            {$-V_{CC}$};
+
+    \end{tikzpicture}
+
+    \caption{Uticaj naponskog ofseta na prenosnu
+    karakteristiku operacionog pojačavača.}
+    \label{fig:opamp_ofset_transfer}
+\end{figure}
+
+{Ako je vrednost naponskog ofseta negativna, prenosna karakteristika biće pomerena udesno, ako je pozitivna biće pomerena ulevo. Za primer sa grafika \ref{fig:opamp_ofset_transfer} naponski ofset bi bio pozitivnog predznaka.}
 
 {Postoje dve metode koje se najčešće koriste za kompenzaciju naponskog ofseta: unutrašnja i spoljašnja kompenzacija. Unutrašnja kompenzacija vrši se promenom određenih komponenti u samom pojačavaču, dok se kod spoljašnje kompenzacije dodaju elementi u spoljašnjem električnom kolu kako bi se kompenzovao naponski ofset. Ovde će isključivo biti reči o spoljašnjoj kompenzaciji.}
 
-{Slična ideja koja je korišćena kod kompenzacije struja polarizacije koristi se i kod kompenzacije naponskog ofseta, odnosno ideja je oduzeti uticaj naponskog ofseta na izlazu operacionog pojačavača. Ovo se postiže dodavanjem kompenzacionog napona na neinvertujući priključak invertujućeg pojačavača, koji će biti istog inteziteta kao i naponski ofset. Prikaz kompenzacije naponskog ofseta invertujućeg pojačavača prikazan je na slici \ref{fig:opamp_offset_comp}.}
+{Slična ideja koja je korišćena kod kompenzacije struja polarizacije koristi se i kod kompenzacije naponskog ofseta, odnosno ideja je oduzeti uticaj naponskog ofseta na izlazu operacionog pojačavača. Način kompenzacije kod invertujućeg i neinvertujućeg pojačavača je različit, te će oba biti obrađena u tekstu.} 
+
+{Kod invertujućeg pojačavača se kompenzacija postiže dodavanjem napona (kompenzacioni napon) na neinvertujući priključak pojačavača. Ovaj napon će biti istog inteziteta kao i naponski ofset. Prikaz kompenzacije naponskog ofseta invertujućeg pojačavača prikazan je na slici \ref{fig:opamp_offset_comp}.}
 
 \begin{figure}[H]
     \centering
@@ -418,12 +497,6 @@ odnosno
         \coordinate (topV_minus) at ($(OA.-) + (-0.5, 2.5)$);
         \coordinate (startarrow) at ($(OA.-) + (-1.5, 0)$);
 
-        \draw[->]
-            (startarrow) -- ++(1,0) node[midway, above] {$I_1$};
-
-        \draw[->]
-            (topV_minus) -- ++(1,0) node[midway, above] {$I_2$};
-
         \node[circ] at ($(OA.-) + (-0.5,0)$) {};
         \node[below] at ($(OA.-) + (-0.5,0)$) {$V^-$};
         \node[circ] at ($(OA.+) + (-0.5,0)$) {};
@@ -450,14 +523,100 @@ odnosno
     \boxed{V_{comp} = \frac{R_3}{R_3 + R_4} V_x}.
 \end{equation}
 
-{Kako nam je za napon kompenzacije $V_{comp}$ neophodan negativan napon za naponski generator $V_x$ uzima se napon na $-V_{cc}$, te se za napon kompenzacije dobija sledeći izraz}
+{Kako nam je za napon kompenzacije $V_{comp}$ neophodan negativan napon za naponski generator $V_x$ uzima se napon na $-V_{cc}$ ili $+V_{cc}$ u zavisnosti od znaka naponskog ofseta, te se za napon kompenzacije dobija sledeći izraz}
 
 \begin{equation}
     V_{comp} = \frac{R_3}{R_3 + R_4} \cdot (-V_{cc}).
 \end{equation}
 
-{Kako u izrazu za napon kompenzacije figurišu dve nepoznate vrednosti otpornika $R_3$ i $R_4$, jednu od te dve vrednosti neophodno je proizvoljno odabrati, dok se druga računa. Obrazac za računanje je sledeći, pod pretpostavkom da se proizvoljna vrednost otpornosti uvela za otpornik $R_3$ i za $V_{comp}$ uvedena je vrednost $-V_{os}$}
+{Kako u izrazu za napon kompenzacije figurišu dve nepoznate vrednosti otpornika $R_3$ i $R_4$, jednu od te dve vrednosti neophodno je proizvoljno odabrati, dok se druga računa. Obrazac za računanje otpornosti otpornika $R_4$ , pod pretpostavkom da se proizvoljna vrednost otpornosti uvela za otpornik $R_3$ i da se za vrednost $V_{comp}$ uzima napon $-V_{os}$, je sledeći}
 
 \begin{equation}
     \boxed{R_4 = \frac{R_3 \cdot (-V_{cc})}{-V_{os}} - R_3}.
 \end{equation}
+
+{Kompenzacija napona kod neinvertujućeg pojačavača izgleda drugačije i prikazana je na kolu na slici \ref{fig:comp_ofset_noninv}.}
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[american]
+        \begin{scope}
+            \ctikzset{tripoles/op amp/width=2.5,   % default 2.5
+                    tripoles/op amp/height=2}    % default 2
+            \node[op amp] (OA) at (0,0) {};
+        \end{scope}
+        \coordinate (krajv-) at ($(OA.-) + (-5, 0)$);
+
+        \draw
+            (OA.+) -- ++(-2,0) to [V, l_=$V_{os}$] ++(0, -2) to [V, l_=$V_{in}$] ++(0,-2) node[ground] {}
+            (OA.-) to [R, l_=$R_1$] ++(-5, 0) to[R, l_=$R_3$] ++(0,-2) to [V, l_=$V_{x}$] ++(0,-2) node[ground] {}
+            (OA.out) -- ++(1,0) node[right]{$V_{out}$}
+            (krajv-) to[R, l_=$R_4$] ++(-3,0) -- ++(0,-1) node[ground]{};
+
+        \draw
+            (OA.up) -- ++(0,1) node[above]{$+V_{cc}$};
+
+        \draw
+            (OA.down) -- ++(0,-1) node[below]{$-V_{cc}$};
+        
+        \coordinate (topV_minus) at ($(OA.-) + (-0.5, 2.5)$);
+        \coordinate (startarrow) at ($(OA.-) + (-1.5, 0)$);
+
+        \node[circ] at ($(OA.-) + (-0.5,0)$) {};
+        \node[below] at ($(OA.-) + (-0.5,0)$) {$V^-$};
+        \node[circ] at ($(OA.+) + (-0.5,0)$) {};
+        \node[below] at ($(OA.+) + (-0.5,0)$) {$V^+$};
+        \node[circ] at (OA.out) {};
+
+        \draw
+            ($(OA.-) + (-0.5, 0)$) -- (topV_minus) to [R, l=$R_2$] ++(4,0) -- (OA.out);
+        
+    \end{circuitikz}
+    \caption{Kompenzacija naponskog ofseta kod neinvertujućeg pojačavača}
+    \label{fig:comp_ofset_noninv}
+\end{figure}
+
+{Kako ne bi došlo do izmene ulaznog signala $V_{in}$ kompenzaciju je neophodno uraditi na invertujućem kraju pojačavača. Kompenzacija se vrši dodavanjem novog pada napona na invertujući ulaz.}
+
+{Za $V_x$ se kao i u prethondom slučaju uzima vrednost $-V_{cc}$ ili $V_{cc}$ u zavisnosti od znaka naponskog ofseta $V_{os}$.}
+
+{Kako bi se trenutno kolo pojednostavilo moguće je koristiti Tevenenovu teoremu, što će biti i učinjeno. Na osnovu Tevenenove teoreme dobijamo kolo na slici \ref{fig:comp_ofset_noninv_tev}.}
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[american]
+        \begin{scope}
+            \ctikzset{tripoles/op amp/width=2.5,   % default 2.5
+                    tripoles/op amp/height=2}    % default 2
+            \node[op amp] (OA) at (0,0) {};
+        \end{scope}
+        \coordinate (krajv-) at ($(OA.-) + (-5, 0)$);
+
+        \draw
+            (OA.+) -- ++(-2,0) to [V, l_=$V_{os}$] ++(0, -1.5) to [V, l_=$V_{in}$] ++(0,-1.5) node[ground] {}
+            (OA.-) to [R, l_=$R_1$] ++(-5, 0) to[R, l_=$R_{th}$] ++(0,-2) to [V, l_=$E_{th}$] ++(0,-2) node[ground] {}
+            (OA.out) -- ++(1,0) node[right]{$V_{out}$};
+
+        \draw
+            (OA.up) -- ++(0,1) node[above]{$+V_{cc}$};
+
+        \draw
+            (OA.down) -- ++(0,-1) node[below]{$-V_{cc}$};
+        
+        \coordinate (topV_minus) at ($(OA.-) + (-0.5, 2.5)$);
+        \coordinate (startarrow) at ($(OA.-) + (-1.5, 0)$);
+
+        \node[circ] at ($(OA.-) + (-0.5,0)$) {};
+        \node[below] at ($(OA.-) + (-0.5,0)$) {$V^-$};
+        \node[circ] at ($(OA.+) + (-0.5,0)$) {};
+        \node[below] at ($(OA.+) + (-0.5,0)$) {$V^+$};
+        \node[circ] at (OA.out) {};
+
+        \draw
+            ($(OA.-) + (-0.5, 0)$) -- (topV_minus) to [R, l=$R_2$] ++(4,0) -- (OA.out);
+        
+    \end{circuitikz}
+    \caption{Pojednostavljeno kolo Tevenenovom teoremom}
+    \label{fig:comp_ofset_noninv_tev}
+\end{figure}
+

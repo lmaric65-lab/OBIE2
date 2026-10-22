@@ -615,8 +615,69 @@ odnosno
         \draw
             ($(OA.-) + (-0.5, 0)$) -- (topV_minus) to [R, l=$R_2$] ++(4,0) -- (OA.out);
         
-    \end{circuitikz}
+        \draw[->]
+            ($(OA.-) + (-1.5, 0)$) -- ($(OA.-) + (-0.5, 0)$) node[midway, above] {$I_1$};
+
+        \draw[->]
+            ($(OA.-) + (-0.5, 2.5)$) -- ++(1, 0) node[midway, above] {$I_2$};
+
+        \end{circuitikz}
     \caption{Pojednostavljeno kolo Tevenenovom teoremom}
     \label{fig:comp_ofset_noninv_tev}
 \end{figure}
 
+{Za Tevenenovu otpornost i Tevenenov generator se dobijaju izrazi}
+
+\begin{equation}
+    E_{th} = \frac{R_4}{R_3 + R_4}V_{x}
+    \qquad \text{i} \qquad
+    R_{th} = \frac{R_3R_4}{R_3 + R_4}.
+\end{equation}
+
+{Za kolo sa slike moguće je napisati izraz za vrednost struja}
+
+\begin{equation}
+    I_1 = \frac{E_{th} - V^-}{R_1 + R_{th}}
+    \qquad \text{i} \qquad
+    I_2 = \frac{V^- - V_{out}}{R_2}.
+\end{equation}
+
+{Kako su tačke $V^-$ i $V^+$ na istom potencijalu, sledi}
+
+\begin{equation}
+    V^+ = V^- = V_{in} + V_{os}.
+\end{equation}
+
+{Sređivanjem izraza dobija se vrednost za $V_{out}$}
+
+\begin{equation}
+    V_{out} = (1 + \frac{R_2}{R_1 + R_{th}})(V_{in} + V_{os}) - \frac{R_2}{R_1 + R_{th}}E_{th}, \text{odnosno}
+\end{equation}
+
+\begin{equation}
+    V_{out} = (1 + \frac{R_2}{R_1 + R_{th}})V_{in} + (1 + \frac{R_2}{R_1 + R_{th}})V_{os} - \frac{R_2}{R_1 + R_{th}}E_{th}.
+\end{equation}
+
+{Ovaj izraz se praktično može podeliti na dva dela, u prvom delu figuriše novi izraz za pojačanje ulaznog signala $A_{v} = 1 + \frac{R_2}{R_1 + R_{th}}$ i izraz za kompenzaciju naponskog ofseta na koji će biti stavljen veći fokus. Ovaj izraz će biti posmatran kao $V_{osout}$ i on predstavlja uticaj novog naponskog ofseta na izlaz}
+
+\begin{equation}
+    V_{osout} = (1 + \frac{R_2}{R_1 + R_{th}})V_{os} - \frac{R_2}{R_1 + R_{th}}E_{th}.
+\end{equation}
+
+{Kako je cilj da naponski ofset nikako ne utiče na izlaz pojačavača, ovaj izraz treba izjednačiti nulom,}
+
+\begin{equation}
+    V_{osout} = (1 + \frac{R_2}{R_1 + R_{th}})V_{os} - \frac{R_2}{R_1 + R_{th}}E_{th} = 0.
+\end{equation}
+
+{Uvrštanjem izraza za Tevenenovu otpornost $R_{th}$, Tevenenov generator $E_{th}$ i vrednost $V_x$ dobija se}
+
+\begin{equation}
+    (1 + \frac{R_2}{R_1 + \frac{R_3R_4}{R_3 + R_4}})V_{os} - \frac{R_2}{R_1 + \frac{R_3R_4}{R_3 + R_4}}\frac{R_4}{R_3 + R_4}V_{cc} = 0
+\end{equation}
+
+{Kao i kod kompenzacije kod invertujućeg pojačavača i ovde se pretpostavlja jedna vrednost otpornika ($R_3$ ili $R_4$, u tekstu će biti pretpostavljena vrednost za $R_3$), a vrednost drugog otpornika se računa. Vrednost otpornika $R_4$ računa se sređivanjem prethodnog izraza, odnosno}
+
+\begin{equation}
+    \boxed{R_4 = \frac{(R_1 + R_2)R_3V_{os}}{R_2V_{cc} - (R_1 + R_2 + R_3)V_{os}}}.
+\end{equation}

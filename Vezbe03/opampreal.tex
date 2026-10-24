@@ -44,7 +44,7 @@
 
 \subsection{Struja polarizacije}
 
-{Struje polarizacije predstavljaju posledicu nesavršenosti realnog operacionog pojačavača. Za razliku od idealnog operacionog pojačavača, kod koga kroz ulazne priključke ne teče struja, kod realnog pojačavača postoje male ulazne struje koje se nazivaju struje polarizacije, one nastaju zbog toga što ulazna impedansa pojačavača nije beskonačna i zbog nesavršenosti u izradi samog pojačavača. Ove struje mogu izazvati dodatne padove napona na otpornicima u kolu i time dovesti do odstupanja izlaznog napona od njegove idealne vrednosti. Obično su u opsegu od $1\,pA$ do $100\,\mu A$.}
+{Struje polarizacije nastaju zbog toga što su pojačavači pretežno realizovani preko tranzistora, kojima treba određena struja za rad. Za razliku od idealnog operacionog pojačavača, kod koga kroz ulazne priključke ne teče struja, kod realnog pojačavača postoje male ulazne struje koje se nazivaju struje polarizacije. Ove struje mogu izazvati dodatne padove napona na otpornicima u kolu i time dovesti do odstupanja izlaznog napona od njegove idealne vrednosti. Obično su u opsegu od $1\,pA$ do $100\,\mu A$. Postoje kod pojačavača u otvorenoj sprezi, samo nemaju uticaj na njegovu prenosnu karakteristiku.}
 
 \begin{figure}[H]
     \centering
@@ -201,7 +201,7 @@
     \end{tikzpicture}
 
     \caption{Uticaj struja polarizacije na prenosnu
-    karakteristiku operacionog pojačavača.}
+    karakteristiku pojačavača u zatvorenoj sprezi.}
     \label{fig:opamp_bias_transfer}
 \end{figure}
 
@@ -312,7 +312,7 @@ odnosno
 
 \subsection{Naponski ofset}
 
-{Kao i kod struja polarizacija i naponski ofset predstavlja posledicu nesavršenosti realnog operacionog pojačavača. Kod realnog operacionog pojačavača modeluje se kao naponski generator koji je povezan na neinvertujući ulaz pojačavača i obično ima vrednosti u opsegu od $10\,nV$ do $10\,mV$. Primer naponskog ofseta na invertujućem pojačavaču tad je na slici \ref{fig:opamp_offset}.}
+{Kao i kod struja polarizacija i naponski ofset predstavlja posledicu nesavršenosti realnog operacionog pojačavača. Kod realnog pojačavača modeluje se kao naponski generator koji je povezan na neinvertujući ulaz (moguće je modelovati ga i na invertujućem ulazu uz promenu znaka) i obično ima vrednosti u opsegu od $10\,nV$ do $10\,mV$. Primer naponskog ofseta na pojačavaču u otvorenoj sprezi dat je na slici \ref{fig:opamp_offset_openloop}.}
 
 \begin{figure}[H]
     \centering
@@ -323,9 +323,8 @@ odnosno
             \node[op amp] (OA) at (0,0) {};
         \end{scope}
         \draw
-            (OA.+) -- ++(-2,0) to [V, l_=$V_{os}$] ++(0, -2) node[ground] {}
-            (OA.-) to [R, l_=$R_1$] ++(-5, 0) to [V, l_=$V_{in}$] ++(0,-3.4) node[ground] {}
-            (OA.out) -- ++(1,0) node[right]{$V_{out}$};
+            (OA.+) -- ++(-2,0) to [V, l_=$V_{os}$] ++(0, -2) to [V, l_=$V_{in}$] ++(0, -2) node[ground] {}
+            (OA.-) -- ++(-4, 0) node[ground]{};
 
         \draw
             (OA.up) -- ++(0,1) node[above]{$+V_{cc}$};
@@ -336,70 +335,24 @@ odnosno
         \coordinate (topV_minus) at ($(OA.-) + (-0.5, 2.5)$);
         \coordinate (startarrow) at ($(OA.-) + (-1.5, 0)$);
 
-        \draw[->]
-            (startarrow) -- ++(1,0) node[midway, above] {$I_1$};
-
-        \draw[->]
-            (topV_minus) -- ++(1,0) node[midway, above] {$I_2$};
-
         \node[circ] at ($(OA.-) + (-0.5,0)$) {};
         \node[below] at ($(OA.-) + (-0.5,0)$) {$V^-$};
         \node[circ] at ($(OA.+) + (-0.5,0)$) {};
         \node[below] at ($(OA.+) + (-0.5,0)$) {$V^+$};
-        \node[circ] at (OA.out) {};
-
-        \draw
-            ($(OA.-) + (-0.5, 0)$) -- (topV_minus) to [R, l=$R_2$] ++(4,0) -- (OA.out);
+        \node[right] at ($(OA.out) + (0.4, 0)$) {$V_{out}$};
         
     \end{circuitikz}
-    \caption{Modelovanje naponskog ofseta}
-    \label{fig:opamp_offset}
+    \caption{Modelovanje naponskog ofseta kod pojačavača u otvorenoj sprezi}
+    \label{fig:opamp_offset_openloop}
 \end{figure}
 
-{Kako se naponski ofset $V_{os}$ modeluje na neinvertujućem ulazu (moguće je modelovati ga i na invertujućem ulazu uz promenu znaka) pojačavača sledi}
+{Nakon uvođenja naponskog generatora za naponski ofset $V_{os}$, dolazi do izmene izlaza operacionog pojačavača, gde je on sada}
 
 \begin{equation}
-    V^+ = V_{os} = V^-
-    \label{eq:naponvs}
+    V_{out} = A_o(V^+ - V^-) = A_o(V_{in} + V_{os} - 0) = A_o(V_{in} + V_{os}).
 \end{equation}
 
-{Izrazi za struju i dalje ostaju isti, odnosno}
-
-\begin{equation}
-    I_1 = \frac{V_{in} - V^-}{R_1} \quad i \quad I_2 = \frac{V^- - V_{out}}{R_2}.
-    \label{eq:struje}
-\end{equation}
-
-{Gde se nakon uvrštanja izraza \ref{eq:naponvs} u izraz za struje \ref{eq:struje} i njihovog izjednačavanja dobija}
-
-\begin{equation}
-    \frac{V_{in} - V_{os}}{R_1} = \frac{V_{os} - V_{out}}{R_2},
-\end{equation}
-
-{izražavanjem izlaznog napona kola dobija se}
-
-\begin{equation}
-    \boxed{V_{out} = - \frac{R_2}{R_1} V_{in} + (1 + \frac{R_2}{R_1}) V_{os}}.
-    \label{vout}
-\end{equation}
-
-{Iz jednačine za $V_{out}$ \ref{vout} se zapravo mogu videti posledice naponskog ofseta na kolo, gde se izlazu dodaje član $(1 + \frac{R_2}{R_1})V_{os}$ koji nepovoljno utiče na izlaz operacionog pojačavača i dovodi do nepredviđenih i nepoželjih vrednosti na izlazu.}
-
-{Izvođenje za neinvertujući operacioni pojačavač je slično, te neće biti obrađivano već će samo biti dato u svojoj finalnoj formi}
-
-\begin{equation}
-    \boxed{V_{out} = (1 + \frac{R_2}{R_1})V_{in} + (1 + \frac{R_2}{R_1})V_{os}}.
-\end{equation}
-
-{Može se primetiti da i u ovoj izvedbi operacionog pojačavača dolazi do nepoželjnog izgleda izlaznog signala usled postojanja člana $(1 + \frac{R_2}{R_1})V_{os}$.}
-
-{Kao i kod struja polarizacije i naponski ofset nepoželjno utiče na izgled prenosne karakteristike pojačavača. Uvrštanjem novog izraza za $V_{out}$ u nejednačinu za prenosnu karakteristiku dobija se}
-
-\begin{equation}
-    \frac{-V_{cc} - (1+\frac{R_2}{R_1})V_{os}}{A} \le V_{in} \le \frac{V_{cc} - (1+\frac{R_2}{R_1})V_{os}}{A},
-\end{equation}
-
-{i prenosna karakteristika onda poprima sličan oblik kao i kod struja polarizacije, ovo je predstavljeno na grafiku \ref{fig:opamp_ofset_transfer}.}
+{Sada pojačavač ne pojačavača samo ulazni signal koji mu se dovodi, već pojačava i naponski ofset koji onda dovodi do neželjenih vrednosti na izlazu pojačavača. Posledice naponskog ofseta vide se već na prenosnoj karakteristici otvorene sprege.}
 
 \begin{figure}[H]
     \centering
@@ -458,17 +411,104 @@ odnosno
     \end{tikzpicture}
 
     \caption{Uticaj naponskog ofseta na prenosnu
-    karakteristiku operacionog pojačavača.}
+    karakteristiku operacionog pojačavača}
     \label{fig:opamp_ofset_transfer}
 \end{figure}
 
+{U prisustvu naponskog ofseta dolazi do pomeranja prenosne karakteristike pojačavača, čime se smanjuje njegov dinamički opseg rada, kao i kod struja polarizacije. To najbolje može da se vidi izvođenjem izraza za prenosnu karakteristiku otvorene sprege, gde je ona sada}
+
+\begin{equation}
+    \frac{-V_{cc} - V_{os}A_o}{A_o} \le V_{in} \le \frac{V_{cc} - V_{os}A_o}{A_o}.
+\end{equation}
+
 {Ako je vrednost naponskog ofseta negativna, prenosna karakteristika biće pomerena udesno, ako je pozitivna biće pomerena ulevo. Za primer sa grafika \ref{fig:opamp_ofset_transfer} naponski ofset bi bio pozitivnog predznaka.}
+
+{Sada će biti obrađivane posledice naponskog ofseta na pojačavače u zatvorenoj sprezi, počevši od invertujućeg pojačavača.}
+
+\begin{figure}[H]
+    \centering
+    \begin{circuitikz}[american]
+        \begin{scope}
+            \ctikzset{tripoles/op amp/width=2.5,   % default 2.5
+                    tripoles/op amp/height=2}    % default 2
+            \node[op amp] (OA) at (0,0) {};
+        \end{scope}
+        \draw
+            (OA.+) -- ++(-2,0) to [V, l_=$V_{os}$] ++(0, -2) node[ground] {}
+            (OA.-) to [R, l_=$R_1$] ++(-5, 0) to [V, l_=$V_{in}$] ++(0,-3.4) node[ground] {}
+            (OA.out) -- ++(1,0) node[right]{$V_{out}$};
+
+        \draw
+            (OA.up) -- ++(0,1) node[above]{$+V_{cc}$};
+
+        \draw
+            (OA.down) -- ++(0,-1) node[below]{$-V_{cc}$};
+        
+        \coordinate (topV_minus) at ($(OA.-) + (-0.5, 2.5)$);
+        \coordinate (startarrow) at ($(OA.-) + (-1.5, 0)$);
+
+        \draw[->]
+            (startarrow) -- ++(1,0) node[midway, above] {$I_1$};
+
+        \draw[->]
+            (topV_minus) -- ++(1,0) node[midway, above] {$I_2$};
+
+        \node[circ] at ($(OA.-) + (-0.5,0)$) {};
+        \node[below] at ($(OA.-) + (-0.5,0)$) {$V^-$};
+        \node[circ] at ($(OA.+) + (-0.5,0)$) {};
+        \node[below] at ($(OA.+) + (-0.5,0)$) {$V^+$};
+        \node[circ] at (OA.out) {};
+
+        \draw
+            ($(OA.-) + (-0.5, 0)$) -- (topV_minus) to [R, l=$R_2$] ++(4,0) -- (OA.out);
+        
+    \end{circuitikz}
+    \caption{Modelovanje naponskog ofseta}
+    \label{fig:opamp_offset}
+\end{figure}
+
+{Kako se naponski ofset $V_{os}$ modeluje na neinvertujućem ulazu pojačavača sledi}
+
+\begin{equation}
+    V^+ = V_{os} = V^-
+    \label{eq:naponvs}
+\end{equation}
+
+{Izrazi za struju i dalje ostaju isti, odnosno}
+
+\begin{equation}
+    I_1 = \frac{V_{in} - V^-}{R_1} \quad i \quad I_2 = \frac{V^- - V_{out}}{R_2}.
+    \label{eq:struje}
+\end{equation}
+
+{Gde se nakon uvrštanja izraza \ref{eq:naponvs} u izraz za struje \ref{eq:struje} i njihovog izjednačavanja dobija}
+
+\begin{equation}
+    \frac{V_{in} - V_{os}}{R_1} = \frac{V_{os} - V_{out}}{R_2},
+\end{equation}
+
+{izražavanjem izlaznog napona kola dobija se}
+
+\begin{equation}
+    \boxed{V_{out} = - \frac{R_2}{R_1} V_{in} + (1 + \frac{R_2}{R_1}) V_{os}}.
+    \label{vout}
+\end{equation}
+
+{Iz jednačine \ref{vout} se zapravo mogu videti posledice naponskog ofseta na kolo, gde se izlazu dodaje član $(1 + \frac{R_2}{R_1})V_{os}$ koji nepovoljno utiče na izlaz operacionog pojačavača i dovodi do nepredviđenih i nepoželjih vrednosti na izlazu.}
+
+{Izvođenje za neinvertujući operacioni pojačavač je slično, te neće biti obrađivano već će samo biti dato u svojoj finalnoj formi}
+
+\begin{equation}
+    \boxed{V_{out} = (1 + \frac{R_2}{R_1})V_{in} + (1 + \frac{R_2}{R_1})V_{os}}.
+\end{equation}
+
+{Može se primetiti da i u ovoj izvedbi operacionog pojačavača dolazi do nepoželjnog izgleda izlaznog signala usled postojanja člana $(1 + \frac{R_2}{R_1})V_{os}$. Ovo sve znači da će i kod pojačavača u zatvorenoj sprezi postojanje naponskog ofseta uticati na njihovu prenosnu karakteristiku.}
 
 {Postoje dve metode koje se najčešće koriste za kompenzaciju naponskog ofseta: unutrašnja i spoljašnja kompenzacija. Unutrašnja kompenzacija vrši se promenom određenih komponenti u samom pojačavaču, dok se kod spoljašnje kompenzacije dodaju elementi u spoljašnjem električnom kolu kako bi se kompenzovao naponski ofset. Ovde će isključivo biti reči o spoljašnjoj kompenzaciji.}
 
 {Slična ideja koja je korišćena kod kompenzacije struja polarizacije koristi se i kod kompenzacije naponskog ofseta, odnosno ideja je oduzeti uticaj naponskog ofseta na izlazu operacionog pojačavača. Način kompenzacije kod invertujućeg i neinvertujućeg pojačavača je različit, te će oba biti obrađena u tekstu.} 
 
-{Kod invertujućeg pojačavača se kompenzacija postiže dodavanjem napona (kompenzacioni napon) na neinvertujući priključak pojačavača. Ovaj napon će biti istog inteziteta kao i naponski ofset. Prikaz kompenzacije naponskog ofseta invertujućeg pojačavača prikazan je na slici \ref{fig:opamp_offset_comp}.}
+{Kod invertujućeg pojačavača se kompenzacija postiže dodavanjem napona (kompenzacioni napon) na neinvertujući priključak pojačavača. Ovaj napon će biti iste vrednosti kao i naponski ofset. Prikaz kompenzacije naponskog ofseta invertujućeg pojačavača prikazan je na slici \ref{fig:opamp_offset_comp}.}
 
 \begin{figure}[H]
     \centering
@@ -485,7 +525,7 @@ odnosno
             (OA.+) -- ++(-2,0) to [V, l_=$V_{os}$] ++(0, -2)
             (OA.-) to [R, l_=$R_1$] ++(-5, 0) to [V, l_=$V_{in}$] ++(0,-3.4) node[ground] {}
             (OA.out) -- ++(1,0) node[right]{$V_{out}$}
-            (Vos_end) -- ++(0,-1) to [R, l^=$R_3$, v=$V_{comp}$ ] ++(0,-2) node[ground]{}
+            (Vos_end) -- ++(0,-1) to [R, l^=$R_3$, v=$V_{comp}$] ++(0,-2) node[ground]{}
             ($(Vos_end) + (0,-1)$) to[R, l=$R_4$] ++(4,0) to[V, l=$V_x$] ++(0, -2) node[ground]{};
 
         \draw
@@ -523,17 +563,15 @@ odnosno
     \boxed{V_{comp} = \frac{R_3}{R_3 + R_4} V_x}.
 \end{equation}
 
-{Kako nam je za napon kompenzacije $V_{comp}$ neophodan negativan napon za naponski generator $V_x$ uzima se napon na $-V_{cc}$ ili $+V_{cc}$ u zavisnosti od znaka naponskog ofseta, te se za napon kompenzacije dobija sledeći izraz}
-
-\begin{equation}
-    V_{comp} = \frac{R_3}{R_3 + R_4} \cdot (-V_{cc}).
-\end{equation}
+{Za naponski generator $V_x$ uzima se napon $-V_{cc}$ ili $+V_{cc}$ u zavisnosti od znaka naponskog ofseta.}
 
 {Kako u izrazu za napon kompenzacije figurišu dve nepoznate vrednosti otpornika $R_3$ i $R_4$, jednu od te dve vrednosti neophodno je proizvoljno odabrati, dok se druga računa. Obrazac za računanje otpornosti otpornika $R_4$ , pod pretpostavkom da se proizvoljna vrednost otpornosti uvela za otpornik $R_3$ i da se za vrednost $V_{comp}$ uzima napon $-V_{os}$, je sledeći}
 
 \begin{equation}
-    \boxed{R_4 = \frac{R_3 \cdot (-V_{cc})}{-V_{os}} - R_3}.
+    \boxed{R_4 = \frac{R_3 \cdot V_{x}}{V_{comp}} - R_3}.
 \end{equation}
+
+{Kao što je prethodno spomenuto u zavisnosti od znaka naponskog ofseta $V_{os}$ zavisi da li se za $V_x$ bira napon $+V_{cc}$ ili $-V_{cc}$. Ako je $V_{os} > 0$ bira se $-V_{cc}$, ako je $V_{os}$ < 0 bira se $+V_{cc}$.}
 
 {Kompenzacija napona kod neinvertujućeg pojačavača izgleda drugačije i prikazana je na kolu na slici \ref{fig:comp_ofset_noninv}.}
 
@@ -576,7 +614,7 @@ odnosno
     \label{fig:comp_ofset_noninv}
 \end{figure}
 
-{Kako ne bi došlo do izmene ulaznog signala $V_{in}$ kompenzaciju je neophodno uraditi na invertujućem kraju pojačavača. Kompenzacija se vrši dodavanjem novog pada napona na invertujući ulaz.}
+{Kako ne bi došlo do izmene ulaznog signala $V_{in}$ kompenzaciju je neophodno uraditi na invertujućem kraju pojačavača. Kompenzacija se vrši dodavanjem novog napona na invertujući ulaz.}
 
 {Za $V_x$ se kao i u prethondom slučaju uzima vrednost $-V_{cc}$ ili $V_{cc}$ u zavisnosti od znaka naponskog ofseta $V_{os}$.}
 
@@ -670,14 +708,16 @@ odnosno
     V_{osout} = (1 + \frac{R_2}{R_1 + R_{th}})V_{os} - \frac{R_2}{R_1 + R_{th}}E_{th} = 0.
 \end{equation}
 
-{Uvrštanjem izraza za Tevenenovu otpornost $R_{th}$, Tevenenov generator $E_{th}$ i vrednost $V_x$ dobija se}
+{Uvrštanjem izraza za Tevenenovu otpornost $R_{th}$ i Tevenenov generator $E_{th}$ dobija se}
 
 \begin{equation}
-    (1 + \frac{R_2}{R_1 + \frac{R_3R_4}{R_3 + R_4}})V_{os} - \frac{R_2}{R_1 + \frac{R_3R_4}{R_3 + R_4}}\frac{R_4}{R_3 + R_4}V_{cc} = 0
+    (1 + \frac{R_2}{R_1 + \frac{R_3R_4}{R_3 + R_4}})V_{os} - \frac{R_2}{R_1 + \frac{R_3R_4}{R_3 + R_4}}\frac{R_4}{R_3 + R_4}V_{x} = 0
 \end{equation}
 
 {Kao i kod kompenzacije kod invertujućeg pojačavača i ovde se pretpostavlja jedna vrednost otpornika ($R_3$ ili $R_4$, u tekstu će biti pretpostavljena vrednost za $R_3$), a vrednost drugog otpornika se računa. Vrednost otpornika $R_4$ računa se sređivanjem prethodnog izraza, odnosno}
 
 \begin{equation}
-    \boxed{R_4 = \frac{(R_1 + R_2)R_3V_{os}}{R_2V_{cc} - (R_1 + R_2 + R_3)V_{os}}}.
+    \boxed{R_4 = \frac{(R_1 + R_2)R_3V_{os}}{R_2V_{x} - (R_1 + R_2 + R_3)V_{os}}}.
 \end{equation}
+
+{Kao i kod invertujućeg pojačavača i ovde se vrednost napona $V_x$ bira na osnovu znaka naponskog ofseta $V_{os}$, ako je on pozitivan se bira $+V_{cc}$, ako je negativan bira se $-V_{cc}$.}

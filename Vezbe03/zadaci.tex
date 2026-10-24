@@ -5,32 +5,50 @@
 \newtheorem{zadatak}{Zadatak}
 
 \begin{zadatak}
-    Sastaviti kolo neinvertujućeg operacionog pojačavača, koristiti operacioni pojačavač LT1014, gde su $\pm V_{cc}=\pm15\,V$, a $R_1 = 1 \,kV$ i $R_2 = 1 \,M\Omega$, i odrediti:
+    Sastaviti kolo neinvertujućeg pojačavača, koristiti operacioni pojačavač AD8040, gde su $\pm V_{cc}=\pm10\,V$, a $R_1 = 100 \,k\Omega$ i $R_2 = 1 \,M\Omega$, i odrediti:
 
     \begin{enumerate}
-        \item [a)] Vrednost struja polarizacije za kolo,
-        \item [b)] Izlaz iz operacionog pojačavača za proizvoljnu vrednost $V_{in}$,
+        \item [a)] Očekivani izlaz pojačavača, ako se na ulaz dovodi signal $V_{in} = 0.9\,V sin(20\,\pi t)$,
+        \item [b)] Vrednost struja polarizacije za kolo,
         \item [c)] Prenosnu karakteristiku kola,
-        \item [d)] Eliminisati uticaj struja polarizacije na izlaz kola i
-        \item [e)] Prikazati prenosnu karakteristiku nakon eliminasanja uticaja struja polarizacije.
+        \item [d)] Kompenzaciju uticaja struja polarizacije na izlaz kola,
+        \item [e)] Izlaz kola nakon kompenzacije za ulaz iz a).
     \end{enumerate}
 \end{zadatak}
 
 \begin{zadatak}
-    Sastaviti kolo neinvertujućeg operacionog pojačavača, koristiti operacioni pojačavač LT1014, gde su $\pm V_{cc}=\pm15\,V$, a $R_1 = 1 \,kV$ i $R_2 = 1 \,MV$, i odrediti:
+    Sastaviti kolo invertujućeg pojačavača, koristiti operacioni pojačavač ADA4891, gde su $\pm V_{cc}=\pm10\,V$, a $R_1 = 100 \,k\Omega$ i $R_2 = 1 \,M\Omega$, i odrediti:
     
     \begin{enumerate}
-        \item [a)] Vrednost naponskog ofseta u kolu,
-        \item [b)] Izlaz iz operacionog pojačavača za proizvoljnu vrednost $V_{in}$,
-        \item [c)] Eliminisati uticaj naponskog ofseta na izlaz kola.
+        \item [a)] Očekivani izlaz kola ako se na ulaz dovede signal $V_{in} = 0.1\,V\,sin(20\,\pi t)$,
+        \item [b)] Vrednost naponskog ofseta u kolu,
+        \item [c)] Prenosnu karakteristiku pojačavača,
+        \item [d)] Vrednost otpornika za kompenzaciju naponskog ofseta i
+        \item [e)] Vrednost izlaznog signala za ulazni signal iz a).
     \end{enumerate}
 \end{zadatak}
 
 \begin{zadatak}
-    Sastaviti kolo neinvertujućeg operacionog pojačavača, koristiti Universal Op Amp 2, gde su $\pm V_{cc}=\pm15\,V$, a $R_1 = 1 \,kV$ i $R_2 = 1 \,MV$, i odrediti:
+    Sastaviti kolo neinvertujućeg pojačavača, koristiti operacioni pojačavač ADA4891, gde su $\pm V_{cc}=\pm10\,V$, a $R_1 = 100 \,k\Omega$ i $R_2 = 1 \,M\Omega$, i odrediti:
     
     \begin{enumerate}
-        \item [a)] bodeov diagram pojačanja operacionog pojačavača u otvorenoj sprezi sa ulaznim AC u vrednosti od 1
-        \item [b)] bodeov diagram pojačanja operaciongo pojačavača u zatvorenoj sprezi
+        \item [a)] Očekivani izlaz kola ako se na ulaz dovede signal $V_{in} = 0.1\,V\,sin(20\,\pi t)$,
+        \item [b)] Vrednost naponskog ofseta u kolu,
+        \item [c)] Prenosnu karakteristiku pojačavača,
+        \item [d)] Vrednost otpornika za kompenzaciju naponskog ofseta i
+        \item [e)] Vrednost izlaznog signala za ulazni signal iz a).
+    \end{enumerate}
+\end{zadatak}
+
+\pagebreak
+\section{Zadatak za domaći}
+
+\begin{zadatak}
+    Za neinvertujući pojačavač realizovan preko operacionog pojačavača OP777, čija su naponi napajanja $\pm V_{cc} = \pm 10 V$, a otpornosti otpornika $R_1 = \,100\,k\Omega$ i $R_2 = \,1\,M\Omega$, odrediti:
+    \begin{enumerate}
+        \item [a)] Očekivani izlaz iz kola ako je ulazni signal $V_{in} = 0.1\,V \,sin(40\,\pi t)$ pod pretpostavkom idealnog pojačavača,
+        \item [b)] Napisati izlaz iz kola nakon simulacije u LTSpice-u i uporediti ga sa očekivanim,
+        \item [c)] Vrednost naponskog ofseta i struja polarizacije (NAPOMENA: nije moguće u isto vreme odrediti oba, prvo mora da se negira uticaj ili naponskog ofseta ili struja polarizacije kako bi se izračunala njihova zasebna vrednost),
+        \item [d)] Vrednost otpornika $R_3$ za kompenzaciju struja polarizacije i vrednost otpornika $R_4$ i $R_5$ za kompenzaciju naponskog ofseta.
     \end{enumerate}
 \end{zadatak}
